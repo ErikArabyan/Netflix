@@ -1,0 +1,67 @@
+.registration-main{
+    padding-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    width: 100%;
+    min-height: calc(100vh - 200px);
+}
+.blacktext{
+    color: #000;
+}
+.textlabel{
+    padding-top: 4px;
+}
+.registration-inner{
+    display: flex;
+    text-align: left;
+    width: 40%;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.check{
+    display: flex;
+    column-gap: 8px;
+}
+
+.registration-inputs {
+    color: #000;
+    background-color: rgb(255, 255, 255);
+    padding: 20px 10px 5px;
+    font-size: 13.4px;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .registration-inputs:focus+label {
+    font-size: 10px;
+    top: -47px;
+  }
+  
+  .registration-inputs:not(:placeholder-shown)+label {
+    position:relative;
+    left: 10px;
+    color: #000;
+    font-size: 10px;
+    top:-47px;
+  }
+  
+  .registration-inputs:-webkit-autofill {
+    font-size: 13.4px;
+    padding: 20px 10px 5px !important;
+    -webkit-text-fill-color: rgb(0, 0, 0) !important;
+    -webkit-background-clip: text;
+  }
+  
+  .registration-inputs:-webkit-autofill:not(:placeholder-shown)+label {
+    font-size: 10px;
+    top: -47px;
+  }
+  
+  .register{
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+  }

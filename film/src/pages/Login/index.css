@@ -1,0 +1,78 @@
+.login {
+  background-image: url("../../../public/login.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 50px);
+  background-color: rgba(0, 0, 0, 0.363);
+}
+
+.innerform {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.719);
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 100px 125px;
+  width: 220px;
+  height: 275px;
+  text-align: center;
+}
+
+
+
+.login-label {
+  position: relative;
+  text-align: left;
+  height: 0px;
+  top: -42px;
+  left: 10px;
+  color: rgb(129, 129, 129);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.login-input {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px 10px 5px;
+  font-size: 13.4px;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-input:focus+label {
+  font-size: 10px;
+  top: -47px;
+}
+
+.login-input:not(:placeholder-shown)+label {
+  font-size: 10px;
+  top: -47px;
+}
+
+.login-input:-webkit-autofill {
+  font-size: 13.4px;
+  padding: 20px 10px 5px !important;
+  -webkit-text-fill-color: rgb(255, 255, 255) !important;
+  -webkit-background-clip: text;
+}
+
+.login-input:-webkit-autofill:not(:placeholder-shown)+label {
+  font-size: 10px;
+  top: -47px;
+}
+
+.invalid {
+  border: solid red 2px;
+}
+
+.caught{
+  color: red;
+}

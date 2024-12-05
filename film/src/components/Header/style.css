@@ -1,0 +1,115 @@
+.logo {
+    width: 107px;
+    object-fit: contain;
+    object-position: 5px 3px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    min-height: 50px;
+}
+
+.logged-in {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    min-height: 50px;
+}
+
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 95%;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.authLinks {
+    background-color: black;
+    border: solid 1px gray;
+    border-radius: 3px;
+    padding: 9px 24px;
+    font-weight: bolder;
+    transition: 0.15s;
+}
+
+.authLinks:hover {
+    background-color: rgb(56, 56, 56);
+}
+
+.header_text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: lighter;
+}
+
+.profile_image {
+    width: 50px;
+}
+
+.drowdown_arrow {
+    width: 15px;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.search_icon {
+    width: 25px;
+}
+
+.dropdown {
+    opacity: 1;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    border: solid rgb(58, 58, 58);
+    border-top: solid white;
+}
+
+.show {
+    opacity: 0;
+}
+
+.line {
+    width: 100%;
+    border: solid 2px rgb(58, 58, 58);
+    margin: 5px 0px 10px;
+}
+
+.innertext {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    cursor: default;
+    width: 150px;
+    margin: 8px;
+    padding: 10px;
+    row-gap: 3px;
+}

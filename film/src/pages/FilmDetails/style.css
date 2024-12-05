@@ -1,0 +1,65 @@
+.fd-img{
+    position: fixed;
+    z-index: -100;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    filter: blur(50px) brightness(40%);
+}
+
+.fd{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    height: 100%;
+}
+
+.video {
+    margin: 70px;
+    width: 100%;
+    height: 100%;
+}
+
+.canvas{
+    position: absolute;
+    top: 0;
+    left: -15%;
+    width: 130%;
+    z-index: -1;
+}
+
+.star{
+    display: flex;
+    gap: 0.2px;
+    height: 50px;
+    width: 50px;
+}
+
+.one{
+    position: relative;
+    background-color: red;
+    /* clip-path: polygon(50% 0,80% 100%,0 39%,100% 39%,20% 100%); */
+    clip-path: polygon(100% 0, 100% 77%, 40% 100%, 62% 62%, 0 39%, 78% 39%);
+    width: 50%;
+    height: 100%;
+}
+
+.two{
+    position: relative;
+    background-color: red;
+    clip-path: polygon(0% 0, 0% 77%, 60% 100%, 38% 63%, 100% 39%, 22% 39%);
+    width: 50%;
+    height: 100%;
+}
+
+.rating{
+    display: flex;
+}

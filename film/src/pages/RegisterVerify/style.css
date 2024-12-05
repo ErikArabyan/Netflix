@@ -1,0 +1,38 @@
+.verification-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.code-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.code-input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  border: 1px solid #000000;
+  border-radius: 5px;
+}
+
+#verification-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.code-input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.code_error{
+  border: 1px solid red;
+}
