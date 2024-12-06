@@ -23,7 +23,7 @@ class Film(models.Model):
     distributed_by = models.ManyToManyField(User, limit_choices_to={'is_distributor': True}, related_name=_('distributed_films'))
     art_directors = models.ManyToManyField(User, limit_choices_to={'is_art_director': True}, related_name=_('art_directors'))
     editors = models.ManyToManyField(User, limit_choices_to={'is_editor': True}, related_name=_('editors'))
-    # rate = models.ForeignKey(Rate, on_delete=models.CASCADE, null=True, related_name='rateit')
+    rate = models.ManyToManyField(User, related_name='rate', through='Rate')
     budget = models.IntegerField('Budget')
     release_date = models.DateField('Release Date', auto_now_add=True)
     image = models.FileField('Film Image', upload_to='images')
@@ -37,9 +37,15 @@ class Film(models.Model):
         return self.name 
     
 class Rate(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    film = models.ForeignKey(Film,on_delete=models.CASCADE)
-    rate = models.IntegerField('rate')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rated_user')
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='rate_number')
+    rated = models.IntegerField('rate')
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['film', 'user'], name='unique_pair')
+        ]
+
     
 class Genre(models.Model):
     name = models.CharField('genres', max_length=255)

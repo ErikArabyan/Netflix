@@ -20,6 +20,7 @@
     justify-content: center;
     background-color: rgba(0, 0, 0, 0);
     min-height: 50px;
+    z-index: 100;
 }
 
 .header_inner {
