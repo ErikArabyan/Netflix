@@ -3,5 +3,6 @@ from .views import *
 
 urlpatterns = [
     path('', HomeAPI.as_view()),
-    path('<int:id>/<str:film>/', FilmDetail.as_view(), name='filmdetail')
+    path('<int:id>/<str:film>/', FilmDetail.as_view(), name='filmdetail'),
+    path('rate/', rate),
 ]
