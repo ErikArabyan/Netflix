@@ -1,4 +1,4 @@
-import "./style.css";
+import styles from "./style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -15,34 +15,34 @@ export const ForgotPassword = () => {
     };
 
     return (
-        <div className="fp">
-            <div className="fp-inner">
-                <div className="fp-div">
-                    <h1 className="black-text">Update password, email or phone</h1>
-                    <p className="black-text">How would you like to reset your password?</p>
-                    <div className="radio">
-                        <label className="rp-inp" htmlFor="html">
+        <div className={styles.fp}>
+            <div className={styles.fpInner}>
+                <div className={styles.fpDiv}>
+                    <h1 className={styles.blackText}>Update password, email or phone</h1>
+                    <p className={styles.blackText}>How would you like to reset your password?</p>
+                    <div className={styles.radio}>
+                        <label className={styles.rpInp} htmlFor="html">
                             <input type="radio" name="email-sms" value="email" defaultChecked />
-                            <p className="black-text">Email</p>
+                            <p className={styles.blackText}>Email</p>
                         </label>
-                        <label htmlFor="css" className="rp-inp">
+                        <label htmlFor="css" className={styles.rpInp}>
                             <input type="radio" id="css" name="email-sms" value="SMS" />
-                            <p className="black-text">SMS</p>
+                            <p className={styles.blackText}>SMS</p>
                         </label>
                     </div>
-                    <p className="black-text">We will send you an email with instructions on how to reset your password.</p>
-                    <form className="fp-form" onSubmit={handleSubmit(save)}>
+                    <p className={styles.blackText}>We will send you an email with instructions on how to reset your password.</p>
+                    <form className={styles.fpForm} onSubmit={handleSubmit(save)}>
                         <input
-                            className="fp-input"
+                            className={styles.fpInput}
                             type="email"
                             placeholder="name@example.com"
                             {...register("email", {
                                 required: "Please enter your Email",
                             })}
                         />
-                        <button className="nbutton">Email Me</button>
+                        <button className={styles.nbutton}>Email Me</button>
                     </form>
-                    <Link className="black-text">I don't remember my email or phone.</Link>
+                    <Link className={styles.blackText}>I don't remember my email or phone.</Link>
                 </div>
             </div>
         </div>

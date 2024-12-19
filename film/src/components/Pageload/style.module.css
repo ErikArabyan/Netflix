@@ -62,3 +62,7 @@
     transform: scaleY(1);
     transition-delay: 0.4s;
 }
+
+.hide {
+    display: none;
+}

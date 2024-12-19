@@ -1,17 +1,12 @@
 // import { useEffect } from "react";
-import "./Style.css";
+import styles from "./style.module.css";
 
 export const Pageload = ({isloading}) => {
-    // useEffect(() => {}, [])
-    // let style = document.createElement('style');
-    // style.textContent = '* { overflow: none; }';
-    // document.head.appendChild(style);
-    // style?.parentNode?.removeChild(style)
     return (
-        <div className={`pageload ${isloading}`}>
-            <div className="redline1"></div>
-            <div className="redline2"></div>
-            <div className="redline3"></div>
+        <div className={[styles.pageload, isloading ? styles.hide : ''].join(' ')}>
+            <div className={styles.redline1}></div>
+            <div className={styles.redline2}></div>
+            <div className={styles.redline3}></div>
         </div>
     );
 };

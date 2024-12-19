@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import "./index.css";
+import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
 import { loginAPI } from "../../features/loginAPI/loginAPI";
 import { setLoading } from "../../features/loading/loading";
@@ -33,15 +33,15 @@ export const Login = () => {
     };
 
     return (
-        <div className="login">
-            <div className="inner">
-                <form className="innerform" onSubmit={handleSubmit(save)}>
-                    {caught ? <h3 className="caught">{caught}</h3> : <></>}
+        <div className={styles.login}>
+            <div className={styles.inner}>
+                <form className={styles.innerform} onSubmit={handleSubmit(save)}>
+                    {caught ? <h3 className={styles.caught}>{caught}</h3> : <></>}
                     <h1>Sign In</h1>
                     <input
                         type="email"
                         id="email"
-                        className={`login-input ${errors.email ? "invalid" : ""}`}
+                        className={[styles.loginInput, errors.email ? "invalid" : ""].join(' ')}
                         placeholder=""
                         {...register("email", {
                             required: "please enter your email",
@@ -51,11 +51,11 @@ export const Login = () => {
                             },
                         })}
                     />
-                    <label className="login-label" htmlFor="email">
+                    <label className={styles.loginLabel} htmlFor="email">
                         Email
                     </label>
                     <input
-                        className={`login-input ${errors.email ? "invalid" : ""}`}
+                        className={[styles.loginInput, errors.email ? "invalid" : ""].join(' ')}
                         type="password"
                         placeholder=""
                         {...register("password", {
@@ -66,10 +66,10 @@ export const Login = () => {
                             // }
                         })}
                     />
-                    <label className="login-label" htmlFor="email">
+                    <label className={styles.loginLabel} htmlFor="email">
                         Password
                     </label>
-                    <button className="nbutton">Login</button>
+                    <button className='nbutton'>Login</button>
                     <Link to={"/auth/forgot-password/"}>Forgot password?</Link>
                     <p>
                         New to Netflix? <Link to={"/auth/register/"}>Sign up now</Link>.

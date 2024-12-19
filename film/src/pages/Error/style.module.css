@@ -13,7 +13,7 @@
     text-align: center;
 }
 
-.error-inner{
+.errorInner{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -23,7 +23,7 @@
     font-size: 40px;
 }
 
-.error-inner:before {
+.errorInner:before {
     position: absolute;
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, .2) 45%, rgba(0, 0, 0, .1) 55%, transparent 70%);
     content: "";
@@ -34,25 +34,25 @@
     bottom: 0;
 }
 
-.image-source{
+.imageSource{
     position: absolute;
     right: 60px;
     bottom: 40px;
 }
 
-.error-code{
+.errorCode{
     padding: 15px;
     border-left: solid red 2px;
 }
 
-.error-button{
+.errorButton{
     width: 200px;
     height: 55px;
     border: none;
     border-radius: 3px;
 }
 
-.error-link{
+.errorLink{
     color: black;
     text-decoration: none;
     font-weight: bold;

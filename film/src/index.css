@@ -27,3 +27,6 @@ body{
 button{
   cursor: pointer;
 }
+.blacktext{
+  color: black;
+}

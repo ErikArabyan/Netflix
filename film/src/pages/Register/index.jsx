@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import "./Style.css";
+import styles from "./style.module.css";
 import { registerAPI } from "../../features/registerAPI/registerAPI";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,17 +17,17 @@ export const Register = () => {
     };
 
     return (
-        <div className="registration-main">
-            <div className="registration-inner">
-                <h1 className="blacktext">Create a password to start your membership</h1>
-                <p className="blacktext">Just a few more steps and you're done! We hate paperwork, too.</p>
-                <form autoComplete="on" className="register" onSubmit={handleSubmit(save)}>
+        <div className={styles.registrationMain}>
+            <div className={styles.registrationInner}>
+                <h1 className={styles.blacktext}>Create a password to start your membership</h1>
+                <p className={styles.blacktext}>Just a few more steps and you're done! We hate paperwork, too.</p>
+                <form autoComplete="on" className={styles.register} onSubmit={handleSubmit(save)}>
                     <input
                         type="first_name"
                         id="first_name"
                         name="first_name"
                         autoComplete="first_name"
-                        className="registration-inputs"
+                        className={styles.registrationInputs}
                         required
                         {...register("first_name", {
                             required: "Please enter your first_name",
@@ -39,7 +39,7 @@ export const Register = () => {
                         id="last_name"
                         name="last_name"
                         autoComplete="last_name"
-                        className="registration-inputs"
+                        className={styles.registrationInputs}
                         required
                         {...register("last_name", {
                             required: "Please enter your last_name",
@@ -51,7 +51,7 @@ export const Register = () => {
                         id="email"
                         name="email"
                         autoComplete="email"
-                        className="registration-inputs"
+                        className={styles.registrationInputs}
                         required
                         {...register("email", {
                             required: "Please enter your email",
@@ -63,7 +63,7 @@ export const Register = () => {
                         id="password"
                         name="password"
                         autoComplete="password"
-                        className="registration-inputs"
+                        className={styles.registrationInputs}
                         required
                         {...register("password", {
                             required: "Please enter your password",
@@ -74,7 +74,7 @@ export const Register = () => {
                         })}
                     />
                     <label htmlFor="password">Password</label>
-                    <button type="submit" className="nbutton">
+                    <button type="submit" className='nbutton'>
                         Register
                     </button>
                 </form>

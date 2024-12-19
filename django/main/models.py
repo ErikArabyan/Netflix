@@ -5,24 +5,31 @@ from django.utils.translation import gettext_lazy as _
 
 class Cinematography(models.Model):
     name = models.CharField('Cinematography Name', max_length=255)
-    
+
     def __str__(self):
         return str(self.name)
 
+
 class Nomination(models.Model):
     name = models.CharField('Nomination Name', max_length=128)
-    
+
     def __str__(self):
         return str(self.name)
+
 
 class Film(models.Model):
     name = models.CharField('Name', max_length=255)
     nominations = models.ManyToManyField('Nomination', related_name='films')
-    cinematography = models.ManyToManyField('Cinematography', related_name='films')
-    directors = models.ManyToManyField(User, limit_choices_to={'is_director': True}, related_name=_('directors'))
-    distributed_by = models.ManyToManyField(User, limit_choices_to={'is_distributor': True}, related_name=_('distributed_films'))
-    art_directors = models.ManyToManyField(User, limit_choices_to={'is_art_director': True}, related_name=_('art_directors'))
-    editors = models.ManyToManyField(User, limit_choices_to={'is_editor': True}, related_name=_('editors'))
+    cinematography = models.ManyToManyField(
+        'Cinematography', related_name='films')
+    directors = models.ManyToManyField(
+        User, limit_choices_to={'is_director': True}, related_name=_('directors'))
+    distributed_by = models.ManyToManyField(User, limit_choices_to={
+                                            'is_distributor': True}, related_name=_('distributed_films'))
+    art_directors = models.ManyToManyField(User, limit_choices_to={
+                                           'is_art_director': True}, related_name=_('art_directors'))
+    editors = models.ManyToManyField(
+        User, limit_choices_to={'is_editor': True}, related_name=_('editors'))
     rate = models.ManyToManyField(User, related_name='rate', through='Rate')
     budget = models.IntegerField('Budget')
     release_date = models.DateField('Release Date', auto_now_add=True)
@@ -32,48 +39,56 @@ class Film(models.Model):
     trailer = models.ManyToManyField("Trailer", related_name='Trailer')
     teaser = models.ManyToManyField("Teaser", related_name='Teaser')
     genres = models.ManyToManyField('Genre', related_name="Genre")
+    price = models.FloatField('price', default=10)
 
     def __str__(self):
-        return self.name 
-    
+        return self.name
+
+
 class Rate(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rated_user')
-    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='rate_number')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='rated_user')
+    film = models.ForeignKey(
+        Film, on_delete=models.CASCADE, related_name='rate_number')
     rated = models.IntegerField('rate')
-    
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['film', 'user'], name='unique_pair')
+            models.UniqueConstraint(
+                fields=['film', 'user'], name='unique_pair')
         ]
 
-    
+
 class Genre(models.Model):
     name = models.CharField('genres', max_length=255)
-    
+
     def __str__(self):
         return str(self.name)
-    
+
+
 class Video(models.Model):
     video = models.FileField('Film', upload_to='films')
 
     def __str__(self):
         return str(self.video)
-    
+
+
 class Preview(models.Model):
     video = models.FileField('Preview', upload_to='preview')
 
     def __str__(self):
         return str(self.video)
-    
+
+
 class Trailer(models.Model):
     trailer = models.FileField('Trailer', upload_to='trailers')
-    
+
     def __str__(self):
         return str(self.trailer)
-    
+
+
 class Teaser(models.Model):
     teaser = models.FileField('Teaser', upload_to='teasers')
-    
+
     def __str__(self):
         return str(self.teaser)
-    

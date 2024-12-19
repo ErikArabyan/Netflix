@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import "./style.css";
+import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
 import { forgotPasswordChangeAPI } from "../../features/forgotPasswordChangeAPI/forgotPasswordChangeAPI";
 import { useNavigate, useParams } from "react-router";
@@ -18,22 +18,22 @@ export const ForgotPasswordConfirm = () => {
     };
 
     return (
-        <div className="sp">
-            <div className="sp-inner">
-                <div className="sp-div">
-                    <form className="sp-form" onSubmit={handleSubmit(save)}>
-                        {errors.password && <p className="errormessage">{errors.password.message}</p>}
-                        {errors.repassword && <p className="errormessage">{errors.repassword.message}</p>}
-                        <label className="sp-label" htmlFor="password">
+        <div className={styles.sp}>
+            <div className={styles.spInner}>
+                <div className={styles.spDiv}>
+                    <form className={styles.spForm} onSubmit={handleSubmit(save)}>
+                        {errors.password && <p className={styles.errormessage}>{errors.password.message}</p>}
+                        {errors.repassword && <p className={styles.errormessage}>{errors.repassword.message}</p>}
+                        <label className={styles.spLabel} htmlFor="password">
                             New Password
                         </label>
-                        <input className="password" type="password" name="password" {...register("password", { required: "Password is required" })} />
+                        <input className={styles.password} type="password" name="password" {...register("password", { required: "Password is required" })} />
 
-                        <label className="sp-label" htmlFor="repassword">
+                        <label className={styles.spLabel} htmlFor="repassword">
                             Repeat New Password
                         </label>
                         <input
-                            className="password"
+                            className={styles.password}
                             type="password"
                             name="repassword"
                             {...register("repassword", {
@@ -46,7 +46,7 @@ export const ForgotPasswordConfirm = () => {
                             })}
                         />
 
-                        <button className="nbutton">Change</button>
+                        <button className={styles.nbutton}>Change</button>
                     </form>
                 </div>
             </div>

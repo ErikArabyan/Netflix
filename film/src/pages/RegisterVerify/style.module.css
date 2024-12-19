@@ -1,4 +1,4 @@
-.verification-container {
+.verificationContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,12 +7,12 @@
   background-color: white;
 }
 
-.code-inputs {
+.codeInputs {
   display: flex;
   gap: 10px;
 }
 
-.code-input {
+.codeInput {
   width: 40px;
   height: 40px;
   text-align: center;
@@ -22,17 +22,17 @@
   border-radius: 5px;
 }
 
-#verification-form {
+#verificationForm {
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 30px;
 }
 
-.code-input[type=number]::-webkit-inner-spin-button {
+.codeInput[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.code_error{
+.codeError{
   border: 1px solid red;
 }

@@ -27,7 +27,7 @@
 
 
 
-.login-label {
+.loginLabel {
   position: relative;
   text-align: left;
   height: 0px;
@@ -38,7 +38,7 @@
   transition: all 0.3s ease;
 }
 
-.login-input {
+.loginInput {
   background-color: rgba(0, 0, 0, 0.7);
   padding: 20px 10px 5px;
   font-size: 13.4px;
@@ -47,24 +47,24 @@
   border-radius: 4px;
 }
 
-.login-input:focus+label {
+.loginInput:focus+label {
   font-size: 10px;
   top: -47px;
 }
 
-.login-input:not(:placeholder-shown)+label {
+.loginInput:not(:placeholder-shown)+label {
   font-size: 10px;
   top: -47px;
 }
 
-.login-input:-webkit-autofill {
+.loginInput:-webkit-autofill {
   font-size: 13.4px;
   padding: 20px 10px 5px !important;
   -webkit-text-fill-color: rgb(255, 255, 255) !important;
   -webkit-background-clip: text;
 }
 
-.login-input:-webkit-autofill:not(:placeholder-shown)+label {
+.loginInput:-webkit-autofill:not(:placeholder-shown)+label {
   font-size: 10px;
   top: -47px;
 }

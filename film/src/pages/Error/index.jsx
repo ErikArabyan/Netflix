@@ -1,26 +1,26 @@
 import { NavLink } from "react-router-dom";
-import "./style.css";
+import styles from "./style.module.css";
 
 export const Error = () => {
     return (
-        <div className="error">
-            <div className="blur"></div>
-            <div className="error-inner">
-                <div className="top">
+        <div className={styles.error}>
+            <div className={styles.blur}></div>
+            <div className={styles.errorInner}>
+                <div className={styles.top}>
                     <h1>Lost your way?</h1>
                     <br />
                     <p>Sorry, we can't find that page. You'll find lots to explore on the home page. </p>
-                    <button className="error-button">
-                        <NavLink className='error-link' to={""}>Netflix Home</NavLink>
+                    <button className={styles.errorButton}>
+                        <NavLink className={styles.errorLink} to={""}>Netflix Home</NavLink>
                     </button>
                 </div>
-                <div className="bottom">
-                    <span className="error-code">
+                <div className={styles.bottom}>
+                    <span className={styles.errorCode}>
                         Error Code <strong>NSES-404</strong>
                     </span>
                 </div>
             </div>
-            <span className="image-source">
+            <span className={styles.imageSource}>
                 FROM <strong>LOST IN SPACE</strong>
             </span>
         </div>

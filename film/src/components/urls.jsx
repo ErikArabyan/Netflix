@@ -20,6 +20,7 @@ const NoAuth = ({ children }) => {
     }
     return user?.username ? <Home /> : children;
 };
+
 const Auth = ({ children }) => {
     const { user } = useSelector((state) => state.userAPI.user);
     return user?.username ? children : <Home />;
@@ -94,4 +95,15 @@ export const urlPatterns = createBrowserRouter([
             },
         ],
     },
-]);
+],
+    {
+        future: {
+            v7_relativeSplatPath: true,
+            v7_fetcherPersist: true,
+            v7_normalizeFormMethod: true,
+            v7_partialHydration: true,
+            v7_skipActionErrorRevalidation: true,
+            v7_startTransition: true,
+        },
+    }
+);

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework',
     'corsheaders',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -145,9 +146,14 @@ AUTH_USER_MODEL = "authentication.User"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+#Email SMTP settings
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='arabyanerik12@gmail.com'
 EMAIL_HOST_PASSWORD='oxfy oukb qjkx ecuy'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+#Stripe Payment settings
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51QX0yBIO5AXqdrLmXks5vubS0TKp7mQ7JqTxZdJPodYKVNP6cBwNC9T1h51YsMjw6kPePcogYZqHPEOdJUUGnlhe00D5DKDqv1'
+STRIPE_SECRET_KEY = 'sk_test_51QX0yBIO5AXqdrLmP8C2NsnxQTXMvpGoJRqBaElJvbM3HpPD8vCeAhCozAPaq9PMT69zxJbJkTNVnPg2tMtgyTgw00lTEuWnAu'

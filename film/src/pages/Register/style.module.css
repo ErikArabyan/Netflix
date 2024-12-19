@@ -1,4 +1,4 @@
-.registration-main{
+.registrationMain{
     padding-top: 200px;
     display: flex;
     justify-content: center;
@@ -13,7 +13,7 @@
 .textlabel{
     padding-top: 4px;
 }
-.registration-inner{
+.registrationInner{
     display: flex;
     text-align: left;
     width: 40%;
@@ -25,7 +25,7 @@
     column-gap: 8px;
 }
 
-.registration-inputs {
+.registrationInputs {
     color: #000;
     background-color: rgb(255, 255, 255);
     padding: 20px 10px 5px;
@@ -35,12 +35,12 @@
     border-radius: 4px;
   }
   
-  .registration-inputs:focus+label {
+  .registrationInputs:focus+label {
     font-size: 10px;
     top: -47px;
   }
   
-  .registration-inputs:not(:placeholder-shown)+label {
+  .registrationInputs:not(:placeholder-shown)+label {
     position:relative;
     left: 10px;
     color: #000;
@@ -48,14 +48,14 @@
     top:-47px;
   }
   
-  .registration-inputs:-webkit-autofill {
+  .registrationInputs:-webkit-autofill {
     font-size: 13.4px;
     padding: 20px 10px 5px !important;
     -webkit-text-fill-color: rgb(0, 0, 0) !important;
     -webkit-background-clip: text;
   }
   
-  .registration-inputs:-webkit-autofill:not(:placeholder-shown)+label {
+  .registrationInputs:-webkit-autofill:not(:placeholder-shown)+label {
     font-size: 10px;
     top: -47px;
   }

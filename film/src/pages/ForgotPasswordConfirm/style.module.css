@@ -1,4 +1,4 @@
-.fp{
+.sp{
     background-image: url('../../../public/forgot_password.jpg');
     background-repeat: no-repeat;
     background-position: top;
@@ -7,48 +7,37 @@
     width: 100vw;
     height: 100vh;
 }
-.fp-inner{
+.spInner{
     display: flex;
     min-height: min(calc(100vh - 0px));
     justify-content: center;
     align-items: center;
 }
-.fp-div{
+.spDiv{
     display: flex;
     background-color: rgb(255, 255, 255);
     flex-direction: column;
-    row-gap: 15px;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    width: 380px;
-    height: 454px;
-    padding: 40px;
+    padding: 60px 40px;
+}
 
-}
-.black-text{
-    color: black;
-}
-.radio{
+.spForm{
     display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+.spLabel{
     position: relative;
-    flex-direction: column;
-    row-gap: 5px;
-    margin-left: 20px;
+    color: black;
+    top: 8px;
 }
 
-.rp-inp{
-    display: flex;
-    gap: 10px;
+.errormessage{
+    color: red;
 }
 
-.fp-form{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    row-gap: 20px;
-    margin: 20px 0px 20px;
-}
-.fp-input{
-    height: 30px;
+.password{
     color: black;
 }

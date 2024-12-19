@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import "./style.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./style.module.css";
+import { useLocation } from "react-router-dom";
 import { registerCodeVerifyAPI } from "../../features/registerCodeVerification/registerCodeVerificationAPI";
 import { useDispatch } from "react-redux";
 
@@ -9,8 +9,7 @@ export const RegisterVerify = () => {
     const location = useLocation();
     const data = location.state;
     const dispatch = useDispatch()
-    const [code_error, setCodeError] = useState('')
-    const navigate = useNavigate()
+    const [codeError, setCodeError] = useState('')
 
     const handleInputChange = (e, index) => {
         const { value } = e.target;
@@ -38,15 +37,15 @@ export const RegisterVerify = () => {
     };
 
     return (
-        <div className="verification-container">
-            <form id="verification-form" onSubmit={handleSubmit}>
+        <div className={styles.verificationContainer}>
+            <form id={styles.verificationForm} onSubmit={handleSubmit}>
                 <div>
-                    <h1 className="blacktext">Let's confirm your account.</h1>
-                    <p className="blacktext">You have received verification code to your email, please confirm it to start watching.</p>
+                    <h1 className='blacktext'>Let's confirm your account.</h1>
+                    <p className='blacktext'>You have received verification code to your email, please confirm it to start watching.</p>
                 </div>
-                <div className="code-inputs">
+                <div className={styles.codeInputs}>
                     {Array.from({ length: 4 }).map((_, index) => (
-                        <input key={index} type="number" min={0} max={9} required className={`code-input ${code_error}`} ref={(el) => (inputsRef.current[index] = el)} onChange={(e) => handleInputChange(e, index)} onKeyDown={(e) => handleKey(e, index)} />
+                        <input key={index} type="number" min={0} max={9} required className={[styles.codeInput, codeError ? styles.codeError : ''].join(' ')} ref={(el) => (inputsRef.current[index] = el)} onChange={(e) => handleInputChange(e, index)} onKeyDown={(e) => handleKey(e, index)} />
                     ))}
                 </div>
                 <button className="nbutton">Confirm</button>

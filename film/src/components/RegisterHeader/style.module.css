@@ -1,4 +1,4 @@
-.register-header{
+.registerHeader{
     position: absolute;
     align-self:self-end ;
     width: 100%;
@@ -6,17 +6,17 @@
     background-color: rgba(255, 255, 255, 0);
     justify-content: center;
 }
-.register-header_inner{
+.registerHeaderInner{
     display: flex;
     margin: auto;
     justify-content: space-between;
     width: 96%;
     height: 98%;
 }
-.register-logo{
+.registerLogo{
     width: 167px;
 }
-.register-authLinks{
+.registerAuthLinks{
     border: none;
     color: #E50914;
     background-color: rgba(255, 255, 255, 0);
@@ -25,7 +25,7 @@
     width: 90px;
     height: 60px;
 }
-.register-authLinks:hover{
+.registerAuthLinks:hover{
     text-decoration: underline;
     cursor: pointer;
 }

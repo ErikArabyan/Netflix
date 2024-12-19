@@ -10,10 +10,12 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         userState: (state, action) => {
-            if (state.user)
+            if (action.payload === 'logout') {
                 state.user = false
-            else
+            }
+            if (action.payload === 'login') {
                 state.user = true
+            }
         },
     },
     extraReducers: (build) => {
