@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
-import uuid
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
@@ -26,7 +25,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class User(AbstractUser):
-    verification_code = models.IntegerField('Verification code', editable=False, null=True)
+    verification_code = models.IntegerField('Verification code', editable=False, null=True, blank=True)
     trycount = models.IntegerField('verification code tryed', default=0)
     image = models.ImageField("Profile Image", default='profile_images/profile_default.png',)
     email = models.EmailField("email address", blank=False, unique=True)

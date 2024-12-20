@@ -1,3 +1,4 @@
+from rest_framework.authtoken.models import Token
 from django.shortcuts import redirect
 import stripe
 from django.views.decorators.csrf import csrf_exempt
@@ -6,12 +7,14 @@ from main.models import Film
 from django.http import JsonResponse
 from .models import *
 
-
 @csrf_exempt
 def create_checkout_session(request, id):
     if request.method == 'GET':
         domain_url = 'http://' + request.get_host()+'/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
+        token_key = request.headers.get('Authorization').replace('Token ', '')
+        token = Token.objects.get(key=token_key)
+        user = token.user.email
         try:
             film = Film.objects.get(id=id)
             checkout_session = stripe.checkout.Session.create(
@@ -20,7 +23,6 @@ def create_checkout_session(request, id):
                 cancel_url=domain_url + 'cancelled/',
                 payment_method_types=['card'],
                 mode='payment',
-                customer='erik',
                 line_items=[
                     {'price_data': {
                         'currency': 'usd',
@@ -31,16 +33,24 @@ def create_checkout_session(request, id):
                     },
                         'quantity': 1,
                     },
-                ]
+                ],
+                metadata={
+                    'user_id': str(user)
+                },
             )
-            return redirect(checkout_session.url, code=303)
+            return JsonResponse({'url': checkout_session.url})
         except Exception as e:
             return JsonResponse({'error': str(e)})
+
 
 def success(request):
     stripe.api_key = "sk_test_51QX0yBIO5AXqdrLmP8C2NsnxQTXMvpGoJRqBaElJvbM3HpPD8vCeAhCozAPaq9PMT69zxJbJkTNVnPg2tMtgyTgw00lTEuWnAu"
     session = request.GET.get('session_id')
     session1 = stripe.checkout.Session.retrieve(session)
-    print(session1.customer)
-    # user = stripe.Customer.retrieve(session1.customer)
-    # Payment.objects.create(checkout_session_id=session)
+    user = session1.metadata.user_id
+    userModel = User.objects.get(email=user)
+    Payment.objects.create(checkout_session_id=session, user=userModel)
+    return redirect(f'{settings.FRONT_URL}success/')
+
+def cancel(request):
+    return redirect(f'{settings.FRONT_URL}cancel/')
