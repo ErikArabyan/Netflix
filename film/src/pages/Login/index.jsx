@@ -41,7 +41,7 @@ export const Login = () => {
                     <input
                         type="email"
                         id="email"
-                        className={[styles.loginInput, errors.email ? "invalid" : ""].join(' ')}
+                        className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
                         placeholder=""
                         {...register("email", {
                             required: "please enter your email",
@@ -55,7 +55,7 @@ export const Login = () => {
                         Email
                     </label>
                     <input
-                        className={[styles.loginInput, errors.email ? "invalid" : ""].join(' ')}
+                        className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
                         type="password"
                         placeholder=""
                         {...register("password", {

@@ -40,7 +40,7 @@ export const ForgotPassword = () => {
                                 required: "Please enter your Email",
                             })}
                         />
-                        <button className={styles.nbutton}>Email Me</button>
+                        <button className='nbutton'>Email Me</button>
                     </form>
                     <Link className={styles.blackText}>I don't remember my email or phone.</Link>
                 </div>

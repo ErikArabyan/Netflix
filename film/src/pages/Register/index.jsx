@@ -3,32 +3,44 @@ import styles from "./style.module.css";
 import { registerAPI } from "../../features/registerAPI/registerAPI";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const Register = () => {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset, formState: {errors} } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [codeError, setCodeError] = useState("");
 
     const save = (data) => {
         dispatch(registerAPI(data))
             .unwrap()
-            .then(navigate("/auth/register/verification-code/", { state: data.email }));
+            .then((res) => {                
+                res.error ? setCodeError(res.message) : navigate("/auth/register/verification-code/", { state: data.email })                
+            });
         reset();
     };
 
     return (
         <div className={styles.registrationMain}>
             <div className={styles.registrationInner}>
-                <h1 className={styles.blacktext}>Create a password to start your membership</h1>
-                <p className={styles.blacktext}>Just a few more steps and you're done! We hate paperwork, too.</p>
+                <h1 className='blacktext'>Create a password to start your membership</h1>
+                <p className='blacktext'>Just a few more steps and you're done! We hate paperwork, too.</p>
                 <form autoComplete="on" className={styles.register} onSubmit={handleSubmit(save)}>
+                    {errors.first_name && <small className={styles.errorMessage}>{errors.first_name.message}</small>}
+                    {errors.last_name && <small className={styles.errorMessage}>{errors.last_name.message}</small>}
+                    {errors.email && <small className={styles.errorMessage}>{errors.email.message}</small>}
+                    {errors.password && <small className={styles.errorMessage}>{errors.password.message}</small>}
+                    {codeError && 
+                            Object.values(codeError).map((error, index) => (
+                                <small className={styles.errorMessage} key={index}>{error}</small>
+                            ))
+                        }
                     <input
                         type="first_name"
                         id="first_name"
                         name="first_name"
                         autoComplete="first_name"
-                        className={styles.registrationInputs}
-                        required
+                        className={[styles.registrationInputs, errors.first_name ? styles.errorInput : ""].join(' ')}
                         {...register("first_name", {
                             required: "Please enter your first_name",
                         })}
@@ -39,8 +51,7 @@ export const Register = () => {
                         id="last_name"
                         name="last_name"
                         autoComplete="last_name"
-                        className={styles.registrationInputs}
-                        required
+                        className={[styles.registrationInputs, errors.last_name ? styles.errorInput : ""].join(' ')}
                         {...register("last_name", {
                             required: "Please enter your last_name",
                         })}
@@ -51,8 +62,7 @@ export const Register = () => {
                         id="email"
                         name="email"
                         autoComplete="email"
-                        className={styles.registrationInputs}
-                        required
+                        className={[styles.registrationInputs, errors.email ? styles.errorInput : ""].join(' ')}
                         {...register("email", {
                             required: "Please enter your email",
                         })}
@@ -63,8 +73,7 @@ export const Register = () => {
                         id="password"
                         name="password"
                         autoComplete="password"
-                        className={styles.registrationInputs}
-                        required
+                        className={[styles.registrationInputs, errors.password ? styles.errorInput : ""].join(' ')}
                         {...register("password", {
                             required: "Please enter your password",
                             pattern: {

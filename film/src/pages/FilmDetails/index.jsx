@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filmDetailsAPI } from "../../features/filmDetailsAPI/filmDetailsAPI";
 import styles from "./style.module.css";
 import { Star } from "./star";
+import { payForFilmAPI } from "../../features/payForFilmAPI/payForFilmAPI";
 
 export const FilmDetails = () => {
     const params = useParams();
@@ -15,12 +16,19 @@ export const FilmDetails = () => {
     useEffect(() => {
         if (params.id) {
             dispatch(filmDetailsAPI(params)).unwrap().then(() => {
-                if (video.offsetHeight) {
-                    container.style.height = video.offsetHeight + 'px'
+                if (video.current && container.current) {
+                    const videoHeight = video.current.offsetHeight;
+                    if (videoHeight) {
+                        container.current.style.height = `${videoHeight}px`;
+                    }
                 }
-            })
+            });
         }
     }, [params, dispatch]);
+
+    const pay = () => {
+        dispatch(payForFilmAPI(params.id))
+    }
 
     return (
         <div className={styles.fd}>
@@ -43,7 +51,7 @@ export const FilmDetails = () => {
                             {[...Array(5)].map((_, i) => <Star key={i} data={i + 1} />)}
                         </div>
                         <div className={styles.buy}>
-                            <a className='nbutton' href="http://127.0.0.1:8000/payment/1">buy the film</a>
+                            <button className='nbutton' onClick={pay}>buy the film</button>
                         </div>
                     </div>
                 </div>

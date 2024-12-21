@@ -1,15 +1,18 @@
 .logo {
-    width: 107px;
+    width: 6.6875rem;
     object-fit: contain;
     object-position: 5px 3px;
 }
 
 .header {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: black;
-    min-height: 50px;
+    min-height: 3.125rem;
 }
 
 .loggedIn {
@@ -19,7 +22,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0);
-    min-height: 50px;
+    min-height: 3.125px;
     z-index: 100;
 }
 
@@ -55,6 +58,27 @@
     background-color: rgb(56, 56, 56);
 }
 
+.logoSmall {
+    display: none;
+    width: 2.5rem;
+    object-fit: contain;
+    object-position: 5px 3px;
+}
+
+@media screen and (max-width: 375px) {
+    .headerText {
+        display: none;
+    }
+
+    .logoSmall {
+        display: block;
+    }
+
+    .logo {
+        display: none;
+    }
+}
+
 .headerText {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
@@ -62,7 +86,7 @@
 }
 
 .profileImage {
-    width: 50px;
+    width: 3.125rem;
 }
 
 .drowdownArrow {
@@ -73,12 +97,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 1rem;
     cursor: pointer;
 }
 
 .searchIcon {
-    width: 25px;
+    width: 1.5625rem;
+}
+
+.searchClose {
+    transition: all 0.5s ease;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+.searchOpen {
+    transition: all 0.5s ease;
+    transform: scaleX(1);
+    transform-origin: right;
+}
+
+.searchDefault {
+    background-color: rgb(0, 0, 0, 0);
+    border: solid #ccc 1px;
+    border-radius: 2px;
+}
+
+.searchDefault:focus {
+    border: solid #ccc 1px !important;
+    border: 2px !important;
 }
 
 .dropdown {
@@ -92,6 +139,7 @@
     right: 20px;
     border: solid rgb(58, 58, 58);
     border-top: solid white;
+    background-color: rgb(25, 25, 25);
 }
 
 .show {
@@ -109,7 +157,7 @@
     overflow: hidden;
     flex-direction: column;
     cursor: default;
-    width: 150px;
+    width: 9.375rem;
     margin: 8px;
     padding: 10px;
     row-gap: 3px;

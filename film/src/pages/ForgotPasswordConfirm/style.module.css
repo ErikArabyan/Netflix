@@ -1,19 +1,21 @@
-.sp{
+.sp {
     background-image: url('../../../public/forgot_password.jpg');
     background-repeat: no-repeat;
     background-position: top;
     background-size: cover;
     background-color: black;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
 }
-.spInner{
+
+.spInner {
     display: flex;
     min-height: min(calc(100vh - 0px));
     justify-content: center;
     align-items: center;
 }
-.spDiv{
+
+.spDiv {
     display: flex;
     background-color: rgb(255, 255, 255);
     flex-direction: column;
@@ -22,22 +24,22 @@
     padding: 60px 40px;
 }
 
-.spForm{
+.spForm {
     display: flex;
     row-gap: 10px;
     flex-direction: column;
 }
 
-.spLabel{
+.spLabel {
     position: relative;
     color: black;
     top: 8px;
 }
 
-.errormessage{
+.errorMessage {
     color: red;
 }
 
-.password{
+.password {
     color: black;
 }

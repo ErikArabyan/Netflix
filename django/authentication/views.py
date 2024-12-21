@@ -46,11 +46,12 @@ def logout(request):
 @permission_classes([AllowAny])
 def register(request):
     serializer_class = RegisterSerializer(data=request.data)
-    if serializer_class.is_valid():
+    if serializer_class.is_valid(): 
         email = serializer_class.validated_data['email']
+        print(email)
         user = serializer_class.save()
-        user.verification_code = randint(1000, 9999)
-        user.save()
+        print(user)
+        print(user.verification_code)
         mail = EmailMessage(
             subject='Password Reset on Netflix',
             body=f"This is your verification code: {user.verification_code}",
@@ -58,20 +59,24 @@ def register(request):
             to=[email],
         )
         mail.send()
-
         return Response(data={'message': email}, status=status.HTTP_201_CREATED)
     else:
-        return Response(data={'message': serializer_class.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error': serializer_class.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['post'])
 @permission_classes([AllowAny])
 def verify_email(request):
     code = request.data.get('verification_code')
+    print(code)
     email = request.data.get('email')
+    print(email)
     try:
         user = User.objects.get(email=email)
+        print(user)
+        print(user.verification_code, code)
         if str(user.verification_code) == code.strip():
+            print(1)
             user.verification_code = None
             user.trycount = 0
             user.save()
@@ -81,10 +86,10 @@ def verify_email(request):
             user.save()
             if user.trycount == 4:
                 user.delete()
-                return Response(data={"message": "You have reached the attempt limit"}, status=status.HTTP_429_TOO_MANY_REQUESTS)
-            return Response(data={"message": "invalid verification code"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={"error": "You have reached the attempt limit"}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            return Response(data={"error": "invalid verification code"}, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
-        return Response(data={'message': 'User Not Found'}, status=status.HTTP_417_EXPECTATION_FAILED)
+        return Response(data={'error': 'User Not Found'}, status=status.HTTP_417_EXPECTATION_FAILED)
 
 
 @api_view(['GET'])
@@ -159,7 +164,6 @@ def password_change(request, uidb64, token):
                 password = request.data.get('password')
                 user.set_password(password)
                 user.save()
-                print(user, password)
                 auth_user = authenticate(
                     username=user.email, password=password)
                 if auth_user is None:

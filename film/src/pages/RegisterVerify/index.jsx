@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import styles from "./style.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { registerCodeVerifyAPI } from "../../features/registerCodeVerification/registerCodeVerificationAPI";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +10,7 @@ export const RegisterVerify = () => {
     const data = location.state;
     const dispatch = useDispatch()
     const [codeError, setCodeError] = useState('')
+    const navigate = useNavigate()
 
     const handleInputChange = (e, index) => {
         const { value } = e.target;
@@ -27,12 +28,12 @@ export const RegisterVerify = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const code = inputsRef.current.map((input) => input.value).join("");
-        const send = {verification_code: code, email: data}
-        if (data) {            
+        const send = { verification_code: code, email: data }
+        if (data) {
             dispatch(registerCodeVerifyAPI(send)).unwrap()
-            .catch(
-                setCodeError("code-error")
-            )
+                .then((res) => {
+                    res.error ? setCodeError(res.error) : navigate('/auth/login')
+                })
         }
     };
 
@@ -42,6 +43,11 @@ export const RegisterVerify = () => {
                 <div>
                     <h1 className='blacktext'>Let's confirm your account.</h1>
                     <p className='blacktext'>You have received verification code to your email, please confirm it to start watching.</p>
+                    {codeError &&
+                        Object.values(codeError).map((error, index) => (
+                            <small className={styles.errorMessage} key={index}>{error}</small>
+                        ))
+                    }
                 </div>
                 <div className={styles.codeInputs}>
                     {Array.from({ length: 4 }).map((_, index) => (

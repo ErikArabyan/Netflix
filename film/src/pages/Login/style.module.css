@@ -4,13 +4,14 @@
   background-position: center;
   background-size: cover;
   background-color: black;
+  min-height: 100vh;
 }
 
 .inner {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.363);
 }
 
@@ -73,6 +74,6 @@
   border: solid red 2px;
 }
 
-.caught{
+.caught {
   color: red;
 }

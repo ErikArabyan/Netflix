@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
 }
 
@@ -33,6 +33,10 @@
   -webkit-appearance: none;
 }
 
-.codeError{
+.codeError {
   border: 1px solid red;
+}
+
+.errorMessage {
+  color: red;
 }

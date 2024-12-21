@@ -8,7 +8,8 @@ export const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} = useSelector((state) => state.userAPI.user);        
-    const [show, setShow] = useState("show");
+    const [show, setShow] = useState(true);
+    const [search, setSearch] = useState(false);
 
     function logout() {
         dispatch(logoutAPI())
@@ -24,16 +25,18 @@ export const Header = () => {
                 <div className={styles.left}>
                     <NavLink>
                         <img className={styles.logo} src="/netflix.png" alt="netflix logo" />
+                        <img className={styles.logoSmall} src="/N.png" alt="netflix logo" />
                     </NavLink>
                 </div>
                 {user?.username ? (
                     <div className={styles.right}>
-                        <img src="/search.png" className={styles.searchIcon} alt="" />
-                        <div className={styles.profile} onClick={() => setShow(show === "" ? "show" : "")}>
+                        <input className={[styles.searchDefault, search ? styles.searchOpen : styles.searchClose].join(' ')} type="text" />
+                        <img src="/search.png" className={styles.searchIcon} alt="" onClick={() => setSearch(search ? false : true)} />
+                        <div className={styles.profile} onClick={() => setShow(show ? false : true)}>
                             <img src={`http://127.0.0.1:8000${user.image}`} className={styles.profileImage} alt="" />
                             <img src="/down-arrow.png" className={styles.drowdownArrow} alt="" />
                         </div>
-                        <div onClick={() => setShow(show === "show" ? "show" : "show")} className={[styles.dropdown, show ? styles.show : ''].join(' ')}>
+                        <div onClick={() => setShow(show ? true : true)} className={[styles.dropdown, show ? styles.show : ''].join(' ')}>
                             <div className={styles.innertext}>
                                 <h4>{user.username}</h4>
                                 <h4>Manage Profiles</h4>

@@ -22,18 +22,18 @@ export const ForgotPasswordConfirm = () => {
             <div className={styles.spInner}>
                 <div className={styles.spDiv}>
                     <form className={styles.spForm} onSubmit={handleSubmit(save)}>
-                        {errors.password && <p className={styles.errormessage}>{errors.password.message}</p>}
-                        {errors.repassword && <p className={styles.errormessage}>{errors.repassword.message}</p>}
+                        {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
+                        {errors.repassword && <p className={styles.errorMessage}>{errors.repassword.message}</p>}
                         <label className={styles.spLabel} htmlFor="password">
                             New Password
                         </label>
-                        <input className={styles.password} type="password" name="password" {...register("password", { required: "Password is required" })} />
+                        <input className='blacktext' type="password" name="password" {...register("password", { required: "Password is required" })} />
 
                         <label className={styles.spLabel} htmlFor="repassword">
                             Repeat New Password
                         </label>
                         <input
-                            className={styles.password}
+                            className='blacktext'
                             type="password"
                             name="repassword"
                             {...register("repassword", {
@@ -46,7 +46,7 @@ export const ForgotPasswordConfirm = () => {
                             })}
                         />
 
-                        <button className={styles.nbutton}>Change</button>
+                        <button className='nbutton'>Change</button>
                     </form>
                 </div>
             </div>
