@@ -68,25 +68,25 @@ export const Home = () => {
                             <h4 className={styles.block}>{i}</h4>
                             <div className={styles.filmgenre} ref={(el) => (slideRef.current[index] = el)}>
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "prev")}>
-                                    <img src="/back.png" className={[styles.changeslideleft, styles.hide].join(" ")} alt="" />
+                                    <img src="/back.png" className={[styles.changeslideleft, styles.hide].join(" ")} alt="" width={20} height={20} />
                                 </div>
                                 {filteredFilms.map((j, filmindex) => (
                                     <div key={filmindex} className={styles.cart}>
                                         {user?.username ? (
                                             <Link className={styles.filmlink} to={`film/${j.id}/${j.name}`}>
-                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} />
+                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </Link>
                                         ) : (
                                             <>
-                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} />
+                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </>
                                         )}
                                     </div>
                                 ))}
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "next")}>
-                                    <img src="/back.png" className={styles.changeslideright} alt="" />
+                                    <img src="/back.png" className={styles.changeslideright} alt="" width={20} height={20} />
                                 </div>
                             </div>
                         </div>
