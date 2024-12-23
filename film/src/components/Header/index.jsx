@@ -7,7 +7,7 @@ import { logoutAPI } from "../../features/logoutAPI/logoutAPI";
 export const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {user} = useSelector((state) => state.userAPI.user);        
+    const { user } = useSelector((state) => state.userAPI.user);
     const [show, setShow] = useState(true);
     const [search, setSearch] = useState(false);
 
@@ -20,7 +20,7 @@ export const Header = () => {
     }
 
     return (
-        <div className={user?.username ? styles.loggedIn : styles.header}>
+        <header className={user?.username ? styles.loggedIn : styles.header}>
             <div className={styles.headerInner}>
                 <div className={styles.left}>
                     <NavLink>
@@ -30,19 +30,21 @@ export const Header = () => {
                 </div>
                 {user?.username ? (
                     <div className={styles.right}>
-                        <input className={[styles.searchDefault, search ? styles.searchOpen : styles.searchClose].join(' ')} type="text" />
-                        <img src="/search.png" className={styles.searchIcon} alt="" onClick={() => setSearch(search ? false : true)} />
+                        <input className={[styles.searchDefault, search ? styles.searchOpen : styles.searchClose].join(' ')} type="search" />
+                        <button className={styles.searchButton}>
+                            <img src="/search.png" className={styles.searchIcon} alt="" onClick={() => setSearch(search ? false : true)} />
+                        </button>
                         <div className={styles.profile} onClick={() => setShow(show ? false : true)}>
                             <img src={`http://127.0.0.1:8000${user.image}`} className={styles.profileImage} alt="" />
                             <img src="/down-arrow.png" className={styles.drowdownArrow} alt="" />
                         </div>
-                        <div onClick={() => setShow(show ? true : true)} className={[styles.dropdown, show ? styles.show : ''].join(' ')}>
-                            <div className={styles.innertext}>
+                        <div onClick={() => setShow(show ? true : true)} className={[styles.dropdown, show ? [styles.show, styles.disable].join(' ') : ''].join(' ')}>
+                            <div className={[styles.innertext, styles.cursor].join(' ')} onClick={() => navigate("/profile/")}>
                                 <h4>{user.username}</h4>
                                 <h4>Manage Profiles</h4>
                             </div>
                             <hr className={styles.line} />
-                            <div className={styles.innertext}>
+                            <div className={[styles.innertext, styles.cursor].join(' ')} onClick={() => navigate("/profile/")}>
                                 <h4>Account</h4>
                                 <h4>Help Center</h4>
                                 <h4 onClick={logout}>Sign out of Netflix</h4>
@@ -52,15 +54,15 @@ export const Header = () => {
                 ) : (
                     <div className={styles.right}>
                         <p className={styles.headerText}>UNLIMITED TV SHOWS & MOVIES</p>
-                        <NavLink to={"/auth/register"}>
+                        <NavLink to={"/auth/register/"}>
                             <button className='nbutton'>Join Now</button>
                         </NavLink>
-                        <NavLink to={"/auth/login"}>
+                        <NavLink to={"/auth/login/"}>
                             <button className={styles.authLinks}>Sign In</button>
                         </NavLink>
                     </div>
                 )}
             </div>
-        </div>
+        </header>
     );
 };

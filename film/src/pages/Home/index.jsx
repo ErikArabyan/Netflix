@@ -54,7 +54,9 @@ export const Home = () => {
     return (
         <div>
             <div className={styles.homeText}>
-                <h1 className={styles.heading}>Movies</h1>
+                <header>
+                    <h1 className={styles.heading}>Movies</h1>
+                </header>
                 <p className={styles.headingText}>Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.</p>
             </div>
             {genres.map((i, index) => {
@@ -63,15 +65,17 @@ export const Home = () => {
                     return null;
                 }
                 return (
-                    <div key={index}>
+                    <section key={index}>
                         <div className={[styles.movies, +index === +len ? styles.blured : ""].join(" ")}>
-                            <h4 className={styles.block}>{i}</h4>
+                            <header>
+                            <h2 className={styles.block}>{i}</h2>
+                            </header>
                             <div className={styles.filmgenre} ref={(el) => (slideRef.current[index] = el)}>
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "prev")}>
                                     <img src="/back.png" className={[styles.changeslideleft, styles.hide].join(" ")} alt="" width={20} height={20} />
                                 </div>
                                 {filteredFilms.map((j, filmindex) => (
-                                    <div key={filmindex} className={styles.cart}>
+                                    <article key={filmindex}>
                                         {user?.username ? (
                                             <Link className={styles.filmlink} to={`film/${j.id}/${j.name}`}>
                                                 <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
@@ -83,7 +87,7 @@ export const Home = () => {
                                                 <p>{j.name}</p>
                                             </>
                                         )}
-                                    </div>
+                                    </article>
                                 ))}
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "next")}>
                                     <img src="/back.png" className={styles.changeslideright} alt="" width={20} height={20} />
@@ -101,7 +105,7 @@ export const Home = () => {
                                 </div>
                             </div>
                         )}
-                    </div>
+                    </section>
                 );
             })}
         </div>

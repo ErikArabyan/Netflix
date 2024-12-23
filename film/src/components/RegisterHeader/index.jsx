@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export const RegisterHeader = () => {
     return (
-        <div className={styles.registerHeader}>
+        <header className={styles.registerHeader}>
             <div className={styles.registerHeaderInner}>
                 <div className={styles.left}>
                     <NavLink className={styles.logolink}>
@@ -16,6 +16,6 @@ export const RegisterHeader = () => {
                     </NavLink>
                 </div>
             </div>
-        </div>
+        </header>
     );
 };

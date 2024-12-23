@@ -1,0 +1,167 @@
+.logo {
+    width: 6.6875rem;
+    object-fit: contain;
+    object-position: 0.3125rem 0.1875rem;
+}
+
+.header {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    min-height: 3.125rem;
+}
+
+.loggedIn {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    min-height: 3.7.8125rem;
+    z-index: 100;
+}
+
+.headerInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 95%;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.authLinks {
+    background-color: black;
+    border: solid 0.0625rem gray;
+    border-radius: 0.1875rem;
+    padding: 0.5625rem 1.5rem;
+    font-weight: bolder;
+    transition: 0.15s;
+}
+
+.authLinks:hover {
+    background-color: rgb(56, 56, 56);
+}
+
+.logoSmall {
+    display: none;
+    width: 2.5rem;
+    object-fit: contain;
+    object-position: 0.3125rem 0.1875rem;
+}
+
+@media screen and (max-width: 23.4375rem) {
+    .headerText {
+        display: none;
+    }
+
+    .logoSmall {
+        display: block;
+    }
+
+    .logo {
+        display: none;
+    }
+}
+
+.headerText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: lighter;
+}
+
+.profileImage {
+    width: 3.125rem;
+}
+
+.drowdownArrow {
+    width: 0.9375rem;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.searchIcon {
+    width: 1.5625rem;
+}
+
+.searchClose {
+    transition: all 0.5s ease;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+.searchOpen {
+    transition: all 0.5s ease;
+    transform: scaleX(1);
+    transform-origin: right;
+}
+
+.searchDefault {
+    background-color: rgb(0, 0, 0, 0);
+    border: solid #ccc 0.0625rem;
+    border-radius: 0.125rem;
+}
+
+.searchDefault:focus {
+    border: solid #ccc 0.0625rem !important;
+    border: 0.125rem !important;
+}
+
+.dropdown {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 3.75rem;
+    right: 1.25rem;
+    border: solid rgb(58, 58, 58);
+    border-top: solid white;
+    background-color: rgb(25, 25, 25);
+    transition: scale 0s none 1s;
+}
+
+.show {
+    opacity: 0;
+    transition: all 0.7s ease-in-out;
+    transform-origin: top;
+}
+
+.line {
+    width: 100%;
+    border: solid 2px rgb(58, 58, 58);
+    margin: 5px 0px 10px;
+}
+
+.innertext {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    cursor: default;
+    width: 9.375rem;
+    margin: 8px;
+    padding: 10px;
+    row-gap: 3px;
+}

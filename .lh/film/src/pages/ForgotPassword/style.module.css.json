@@ -1,0 +1,18 @@
+{
+    "sourceFile": "film/src/pages/ForgotPassword/style.module.css",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1734971247516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1734971247516,
+            "name": "Commit-0",
+            "content": ".fp {\r\n    background-image: url('../../../public/forgot_password.jpg');\r\n    background-repeat: no-repeat;\r\n    background-position: top;\r\n    background-size: cover;\r\n    background-color: black;\r\n    width: 100vw;\r\n    min-height: 100vh;\r\n}\r\n\r\n.fpInner {\r\n    display: flex;\r\n    min-height: min(calc(100vh - 0px));\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n.fpDiv {\r\n    display: flex;\r\n    background-color: rgb(255, 255, 255);\r\n    flex-direction: column;\r\n    row-gap: 15px;\r\n    align-items: flex-start;\r\n    justify-content: center;\r\n    width: 380px;\r\n    height: 454px;\r\n    padding: 40px;\r\n\r\n}\r\n\r\n.blackText {\r\n    color: black;\r\n}\r\n\r\n.radio {\r\n    display: flex;\r\n    position: relative;\r\n    flex-direction: column;\r\n    row-gap: 5px;\r\n    margin-left: 20px;\r\n}\r\n\r\n.rpInp {\r\n    display: flex;\r\n    gap: 10px;\r\n}\r\n\r\n.fpForm {\r\n    display: flex;\r\n    flex-direction: column;\r\n    width: 100%;\r\n    row-gap: 20px;\r\n    margin: 20px 0px 20px;\r\n}\r\n\r\n.fpInput {\r\n    height: 30px;\r\n    color: black;\r\n}"
+        }
+    ]
+}

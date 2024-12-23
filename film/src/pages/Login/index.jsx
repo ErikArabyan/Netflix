@@ -35,45 +35,49 @@ export const Login = () => {
     return (
         <div className={styles.login}>
             <div className={styles.inner}>
-                <form className={styles.innerform} onSubmit={handleSubmit(save)}>
-                    {caught ? <h3 className={styles.caught}>{caught}</h3> : <></>}
-                    <h1>Sign In</h1>
-                    <input
-                        type="email"
-                        id="email"
-                        className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
-                        placeholder=""
-                        {...register("email", {
-                            required: "please enter your email",
-                            pattern: {
-                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                message: "Invalid email address",
-                            },
-                        })}
-                    />
-                    <label className={styles.loginLabel} htmlFor="email">
-                        Email
-                    </label>
-                    <input
-                        className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
-                        type="password"
-                        placeholder=""
-                        {...register("password", {
-                            required: "please enter your password",
-                            // pattern: {
-                            //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                            //     message: 'Invalid email address'
-                            // }
-                        })}
-                    />
-                    <label className={styles.loginLabel} htmlFor="email">
-                        Password
-                    </label>
-                    <button className='nbutton'>Login</button>
-                    <Link to={"/auth/forgot-password/"}>Forgot password?</Link>
-                    <p>
-                        New to Netflix? <Link to={"/auth/register/"}>Sign up now</Link>.
-                    </p>
+                <form className={styles.form} onSubmit={handleSubmit(save)}>
+                    <section className={styles.innerform}>
+                        <header>
+                            <h1>Sign In</h1>
+                        </header>
+                        {caught ? <h3 className={styles.caught}>{caught}</h3> : <></>}
+                        <input
+                            type="email"
+                            id="email"
+                            className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
+                            placeholder=""
+                            {...register("email", {
+                                required: "please enter your email",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Invalid email address",
+                                },
+                            })}
+                        />
+                        <label className={styles.loginLabel} htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            className={[styles.loginInput, errors.email ? styles.invalid : ""].join(' ')}
+                            type="password"
+                            placeholder=""
+                            {...register("password", {
+                                required: "please enter your password",
+                                // pattern: {
+                                //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                                //     message: 'Invalid email address'
+                                // }
+                            })}
+                        />
+                        <label className={styles.loginLabel} htmlFor="email">
+                            Password
+                        </label>
+                        <button className='nbutton'>Login</button>
+                        <Link to={"/auth/forgot-password/"}>Forgot password?</Link>
+                        <p>
+                            New to Netflix? <Link to={"/auth/register/"}>Sign up now</Link>.
+                        </p>
+                    </section>
                 </form>
             </div>
         </div>

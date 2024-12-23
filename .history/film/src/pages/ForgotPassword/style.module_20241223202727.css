@@ -1,0 +1,59 @@
+.fp {
+    background-image: url('../../../public/forgot_password.jpg');
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    background-color: black;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.fpInner {
+    display: flex;
+    min-height: min(calc(100vh - 0px));
+    justify-content: center;
+    align-items: center;
+}
+
+.fpDiv {
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 380px;
+    height: 454px;
+    padding: 40px;
+
+}
+
+.blackText {
+    color: black;
+}
+
+.radio {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    row-gap: 5px;
+    margin-left: 20px;
+}
+
+.rpInp {
+    display: flex;
+    gap: 10px;
+}
+
+.fpForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 20px;
+    margin: 20px 0px 20px;
+}
+
+.fpInput {
+    height: 30px;
+    color: black;
+}

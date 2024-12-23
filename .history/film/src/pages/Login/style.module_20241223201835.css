@@ -1,0 +1,80 @@
+.login {
+  background-image: url("../../../public/login.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+  min-height: 100vh;
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.363);
+}
+
+.form{
+  background-color: rgba(0, 0, 0, 0.719);
+  margin-top: 50px;
+  padding: 3rem clamp(0rem, 8%, 4.75rem);
+}
+
+.innerform {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.625rem;
+}
+
+
+
+.loginLabel {
+  position: relative;
+  text-align: left;
+  height: 0.0rem;
+  top: -2.625rem;
+  left: 0.625rem;
+  color: rgb(129, 129, 129);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.loginInput {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 1.25rem 0.625rem 0.3125rem;
+  font-size: 13.0.25rem;
+  outline: none;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.loginInput:focus+label {
+  font-size: 0.625rem;
+  top: -2.9375rem;
+}
+
+.loginInput:not(:placeholder-shown)+label {
+  font-size: 0.625rem;
+  top: -2.9375rem;
+}
+
+.loginInput:-webkit-autofill {
+  font-size: 13.4px;
+  padding: 20px 10px 5px !important;
+  -webkit-text-fill-color: rgb(255, 255, 255) !important;
+  -webkit-background-clip: text;
+}
+
+.loginInput:-webkit-autofill:not(:placeholder-shown)+label {
+  font-size: 10px;
+  top: -47px;
+}
+
+.invalid {
+  border: solid red 2px;
+}
+
+.caught {
+  color: red;
+}

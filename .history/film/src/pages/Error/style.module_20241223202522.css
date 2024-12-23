@@ -1,0 +1,71 @@
+.error {
+    position: absolute;
+    background-image: url('../../../public/error.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.errorInner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 60%;
+    font-size: 2.5rem;
+}
+
+.errorInner:before {
+    position: absolute;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, .2) 45%, rgba(0, 0, 0, .1) 55%, transparent 70%);
+    content: "";
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.imageSource {
+    position: absolute;
+    right: 3.75rem;
+    bottom: 2.5rem;
+}
+
+.errorCode {
+    padding: 0.9375rem;
+    border-left: solid red 0.125rem;
+}
+
+.errorButton {
+    width: 200px;
+    height: 55px;
+    border: none;
+    border-radius: 3px;
+}
+
+.errorLink {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 23px;
+    z-index: 1;
+}
+
+.top {
+    z-index: 1;
+}
+
+@media screen and (max-width: 700px) {
+    .lost {
+        font-size: 1em;
+    }
+}

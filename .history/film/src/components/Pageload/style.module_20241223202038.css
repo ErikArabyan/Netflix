@@ -1,0 +1,72 @@
+.pageload {
+    overflow: hidden !important;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+.redline1,
+.redline2,
+.redline3 {
+    position: absolute;
+    top: calc(50vh - 6.25rem);
+    transition: opacity 1s ease-out;
+}
+
+.redline1 {
+    opacity: 1;
+    left: calc(50% - 2.5rem);
+    background-color: rgb(176, 7, 16);
+    height: 12.5rem;
+    width: 2.5rem;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 98%, 0% 100%);
+    transform-origin: bottom;
+    transition: 0.2s ease;
+    transform: scaleY(0);
+}
+
+.redline2 {
+    opacity: 1;
+    left: calc(50% - 40px);
+    background-color: rgb(229, 9, 20);
+    height: 200px;
+    width: 120px;
+    z-index: 1;
+    clip-path: polygon(0% 0%, 33% 0%, 33% 0%, 0% 0%);
+    transform-origin: top;
+    transition: clip-path 0.2s ease, transform 0.2s ease;
+}
+
+.redline3 {
+    opacity: 1;
+    left: calc(50% + 40px);
+    background-color: rgb(176, 7, 16);
+    height: 200px;
+    width: 40px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 98%);
+    transform-origin: bottom;
+    transition: 0.2s ease;
+    transform: scaleY(0);
+}
+
+.pageload:hover>.redline1 {
+    transform: scaleY(1);
+}
+
+.pageload:hover>.redline2 {
+    clip-path: polygon(0% 0%, 33% 0, 100% 100%, 67% 99%);
+    transition-delay: 0.2s;
+}
+
+.pageload:hover>.redline3 {
+    transform: scaleY(1);
+    transition-delay: 0.4s;
+}
+
+.hide {
+    display: none;
+}

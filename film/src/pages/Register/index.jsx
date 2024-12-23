@@ -4,6 +4,8 @@ import { registerAPI } from "../../features/registerAPI/registerAPI";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { setLoading } from "../../features/loading/loading";
+
 
 export const Register = () => {
     const { register, handleSubmit, reset, formState: {errors} } = useForm();
@@ -12,10 +14,16 @@ export const Register = () => {
     const [codeError, setCodeError] = useState("");
 
     const save = (data) => {
+        dispatch(setLoading(""));
         dispatch(registerAPI(data))
             .unwrap()
             .then((res) => {                
-                res.error ? setCodeError(res.message) : navigate("/auth/register/verification-code/", { state: data.email })                
+                res.error ? setCodeError(res.error) : navigate("/auth/register/verification-code/", { state: data.email })
+                dispatch(setLoading("hide"));
+                            
+            })
+            .catch(() => {
+            dispatch(setLoading("hide"));
             });
         reset();
     };

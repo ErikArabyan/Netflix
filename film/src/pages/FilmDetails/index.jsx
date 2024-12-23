@@ -41,7 +41,7 @@ export const FilmDetails = () => {
                             <video className={styles.videoFon} autoPlay muted loop ref={video}>
                                 <source src={`http://127.0.0.1:8000/${film.film?.[0]}`} type="video/mp4" />
                             </video>
-                            <video className={styles.video} autoPlay muted loop>
+                            <video className={styles.video} autoPlay muted loop controls>
                                 <source src={`http://127.0.0.1:8000/${film.film?.[0]}`} type="video/mp4" />
                             </video>
                         </div>

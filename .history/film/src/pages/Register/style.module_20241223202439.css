@@ -1,0 +1,74 @@
+.registrationMain {
+  padding-top: 30px;
+  display: flex;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.registrationInner {
+  display: flex;
+  text-align: left;
+  width: clamp(270px, 40%, 43rem);
+  flex-direction: column;
+  row-gap: 1.25rem;
+}
+
+.textlabel {
+  padding-top: 0.25rem;
+}
+
+.check {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.registrationInputs {
+  color: #000;
+  background-color: rgb(255, 255, 255);
+  padding: 1.25rem 0.625rem 0.3125rem;
+  font-size: 13.0.25rem;
+  outline: none;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.registrationInputs:focus+label {
+  font-size: 0.625rem;
+  top: -2.9375rem;
+}
+
+.registrationInputs:not(:placeholder-shown)+label {
+  position: relative;
+  left: 0.625rem;
+  color: #000;
+  font-size: 0.625rem;
+  top: -2.9375rem;
+}
+
+.registrationInputs:-webkit-autofill {
+  font-size: 13.0.25rem;
+  padding: 1.25rem 0.625rem 0.3125rem !important;
+  -webkit-text-fill-color: rgb(0, 0, 0) !important;
+  -webkit-background-clip: text;
+}
+
+.registrationInputs:-webkit-autofill:not(:placeholder-shown)+label {
+  font-size: 0.625rem;
+  top: -2.9375rem;
+}
+
+.register {
+  display: flex;
+  row-gap: 10px;
+  flex-direction: column;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.errorInput {
+  border: 1px solid red;
+}

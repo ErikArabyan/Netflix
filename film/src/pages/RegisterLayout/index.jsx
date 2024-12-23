@@ -4,8 +4,10 @@ import { RegisterHeader } from "../../components/RegisterHeader";
 export const RegisterLayout = () => {
     return (
         <div>
-            <RegisterHeader/>
-            <Outlet/>
+            <RegisterHeader />
+            <main>
+                <Outlet />
+            </main>
         </div>
     );
 };
