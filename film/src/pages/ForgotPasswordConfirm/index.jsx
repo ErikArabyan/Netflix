@@ -5,7 +5,7 @@ import { forgotPasswordChangeAPI } from "../../features/forgotPasswordChangeAPI/
 import { useNavigate, useParams } from "react-router";
 
 export const ForgotPasswordConfirm = () => {
-    const {register, handleSubmit, reset, getValues, formState: { errors }} = useForm();
+    const { register, handleSubmit, reset, getValues, formState: { errors } } = useForm();
     const dispatch = useDispatch();
     const { uidb64, token } = useParams();
     const navigate = useNavigate();
@@ -21,6 +21,9 @@ export const ForgotPasswordConfirm = () => {
         <div className={styles.sp}>
             <div className={styles.spInner}>
                 <div className={styles.spDiv}>
+                    <header>
+                        <h1 className={styles.heading}>Reset Your Password</h1>
+                    </header>
                     <form className={styles.spForm} onSubmit={handleSubmit(save)}>
                         {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
                         {errors.repassword && <p className={styles.errorMessage}>{errors.repassword.message}</p>}

@@ -48,10 +48,7 @@ def register(request):
     serializer_class = RegisterSerializer(data=request.data)
     if serializer_class.is_valid(): 
         email = serializer_class.validated_data['email']
-        print(email)
         user = serializer_class.save()
-        print(user)
-        print(user.verification_code)
         mail = EmailMessage(
             subject='Password Reset on Netflix',
             body=f"This is your verification code: {user.verification_code}",
@@ -68,17 +65,13 @@ def register(request):
 @permission_classes([AllowAny])
 def verify_email(request):
     code = request.data.get('verification_code')
-    print(code)
     email = request.data.get('email')
-    print(email)
     try:
         user = User.objects.get(email=email)
-        print(user)
-        print(user.verification_code, code)
         if str(user.verification_code) == code.strip():
-            print(1)
             user.verification_code = None
             user.trycount = 0
+            user.is_active = True
             user.save()
             return Response(data={"message": "Your email has been verified successfully!"}, status=status.HTTP_202_ACCEPTED)
         else:

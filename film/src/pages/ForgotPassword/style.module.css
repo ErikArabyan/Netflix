@@ -22,10 +22,17 @@
     row-gap: 0.9375rem;
     align-items: flex-start;
     justify-content: center;
-    width: 23.75rem;
-    height: 28.375rem;
+    width: 35rem;
+    margin-top: 5rem;
+    /* height: 28.375rem; */
     padding: 2.5rem;
 
+}
+@media (max-width: 35rem) {
+    .fpDiv {
+        /* height: 100%; */
+        margin: 0;
+    }
 }
 
 .blackText {

@@ -9,11 +9,15 @@ export const Home = () => {
     const { user } = useSelector((state) => state.userAPI.user);
     const { genres } = useSelector((state) => state.filmsAPI);
     const { films } = useSelector((state) => state.filmsAPI);
-    const len = genres.length - 1;
+    const len = genres?.length - 1;
     const token = localStorage.getItem("token");
     const slideRef = useRef([]);
     const dispatch = useDispatch();
-    const scrollby = window.innerWidth - 350;
+    const scrollby = window.innerWidth - 40;
+
+    const search = (searchQuery) => {
+        return films.filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
 
     useEffect(() => {
         dispatch(filmsAPI())
@@ -65,10 +69,10 @@ export const Home = () => {
                     return null;
                 }
                 return (
-                    <section key={index}>
+                    <section key={index} className={styles.filmSection}>
                         <div className={[styles.movies, +index === +len ? styles.blured : ""].join(" ")}>
                             <header>
-                            <h2 className={styles.block}>{i}</h2>
+                                <h2 className={styles.block}>{i}</h2>
                             </header>
                             <div className={styles.filmgenre} ref={(el) => (slideRef.current[index] = el)}>
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "prev")}>

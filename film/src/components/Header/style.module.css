@@ -31,12 +31,17 @@
     justify-content: space-between;
     align-items: flex-end;
     width: 95%;
+    height: 100%;
+    row-gap: 1rem;
+}
+
+.logoLink{
+    min-height: 200%;
 }
 
 .left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: auto 0.0rem;
+    margin-right: 1.25rem;
 }
 
 .right {
@@ -65,7 +70,7 @@
     object-position: 0.3125rem 0.1875rem;
 }
 
-@media screen and (max-width: 23.4375rem) {
+@media screen and (max-width: 25.875rem) {
     .headerText {
         display: none;
     }
@@ -121,11 +126,11 @@
     background-color: rgb(0, 0, 0, 0);
     border: solid #ccc 0.0625rem;
     border-radius: 0.125rem;
+    width: clamp(8rem, 50%, 20rem);
 }
 
 .searchDefault:focus {
-    border: solid #ccc 0.0625rem !important;
-    border: 0.125rem !important;
+    box-shadow: none;
 }
 
 .dropdown {

@@ -11,6 +11,7 @@ import { EmailSend } from "../pages/EmailSend";
 import { FilmDetails } from "../pages/FilmDetails";
 import { useSelector } from "react-redux";
 import { RegisterVerify } from "../pages/RegisterVerify";
+// import { userAPI } from "../features/userAPI/userAPI";
 
 const NoAuth = ({ children }) => {
     const { user } = useSelector((state) => state.userAPI.user);
@@ -30,6 +31,7 @@ export const urlPatterns = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
+        // loader: userAPI,
         children: [
             {
                 path: "",

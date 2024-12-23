@@ -8,7 +8,7 @@ export const forgotPasswordChangeAPI = createAsyncThunk(
             const response = await axiosInstance.post(`auth/reset/${data.uidb64}/${data.token}/`, { 'password': data.password });
             return response.data;
         } catch (error) {
-            return Promise.reject(error.response?.data)
+            return Promise.reject(error.response?.error)
         }
     }
 );

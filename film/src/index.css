@@ -215,6 +215,13 @@ img {
  * 2. Remove the margin in Firefox and Safari.
  */
 
+/* this is mine style */
+ input:focus {
+  outline: 0;
+  outline-color: transparent;
+  outline-style: none;
+}
+
 button,
 input,
 optgroup,

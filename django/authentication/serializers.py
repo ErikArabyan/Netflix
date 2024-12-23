@@ -15,7 +15,7 @@ class LoginSerializer(ModelSerializer):
 class RegisterSerializer(ModelSerializer):
     def validate(self, data):
         data['verification_code'] = randint(1000, 9999)
-
+        data['is_active'] = False
         if 'password' in data:
             data['password'] = make_password(data['password'])
         else:

@@ -1,10 +1,8 @@
 .registerHeader{
     position: absolute;
-    align-self:self-end ;
     width: 100%;
     height: 5.6875rem;
     background-color: rgba(255, 255, 255, 0);
-    justify-content: center;
 }
 .registerHeaderInner{
     display: flex;

@@ -1,11 +1,11 @@
 .filmgenre {
     display: flex;
     gap: 0.625rem;
-    width: 100%;
+    /* width: 100%; */
     text-align: center;
     overflow: scroll;
-    scroll-snap-type: x mandatory;
-    overflow: hidden;
+    /* scroll-snap-type: x mandatory; */
+    /* overflow: hidden; */
 }
 
 .hide {

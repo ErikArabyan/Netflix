@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { filmsAPI } from "./filmsAPI";
 
 export const initialState = {
+    noSearchFilms: [],
     films: [],
     genres: [],
 }
@@ -11,13 +12,14 @@ export const filmsAPISlice = createSlice({
 	initialState,
 	reducers: {
 		setSearch: (state, action) => {
-			state = state.filter(i => i === action.payload)
-			return state
+			state.films = state.noSearchFilms.filter(i => i.name.toLowerCase().includes(action.payload.toLowerCase()))
+
 		},
 	},
 	extraReducers: build => {
 		build
 			.addCase(filmsAPI.fulfilled, (state, action) => {
+				state.noSearchFilms = action.payload.film
 				state.films = action.payload.film
 				state.genres = action.payload.genre
 			})
