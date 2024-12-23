@@ -17,7 +17,7 @@
 
 .form{
   background-color: rgba(0, 0, 0, 0.719);
-  margin-top: 50px;
+  margin-top: 3.125rem;
   padding: 3rem clamp(0rem, 8%, 4.75rem);
 }
 

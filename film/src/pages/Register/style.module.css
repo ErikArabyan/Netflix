@@ -1,5 +1,5 @@
 .registrationMain {
-  padding-top: 30px;
+  padding-top: 1.875rem;
   display: flex;
   background-color: white;
   align-items: center;
@@ -10,7 +10,7 @@
 .registrationInner {
   display: flex;
   text-align: left;
-  width: clamp(270px, 40%, 43rem);
+  width: clamp(16.875rem, 40%, 43rem);
   flex-direction: column;
   row-gap: 1.25rem;
 }
