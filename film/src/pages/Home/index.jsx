@@ -81,7 +81,7 @@ export const Home = () => {
                                 {filteredFilms.map((j, filmindex) => (
                                     <article key={filmindex}>
                                         {user?.username ? (
-                                            <Link className={styles.filmlink} to={`film/${j.id}/${j.name}`}>
+                                            <Link className={styles.filmlink} to={`film/${j.id}/${j.name.split(" ").join('_')}`}>
                                                 <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </Link>

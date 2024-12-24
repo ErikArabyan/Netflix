@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from authentication.tasks import *
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
@@ -49,13 +50,7 @@ def register(request):
     if serializer_class.is_valid(): 
         email = serializer_class.validated_data['email']
         user = serializer_class.save()
-        mail = EmailMessage(
-            subject='Password Reset on Netflix',
-            body=f"This is your verification code: {user.verification_code}",
-            from_email=EMAIL_HOST_USER,
-            to=[email],
-        )
-        mail.send()
+        send_email.delay(email, user.verification_code)
         return Response(data={'message': email}, status=status.HTTP_201_CREATED)
     else:
         return Response(data={'error': serializer_class.errors}, status=status.HTTP_400_BAD_REQUEST)
