@@ -28,9 +28,9 @@ def login(request):
             token, _ = Token.objects.get_or_create(user=auth)
             return Response(status=status.HTTP_200_OK, data={'token': token.key})
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'user not found'})
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'error': 'User not found'})
     else:
-        return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': serializer_class.errors})
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': serializer_class.errors})
 
 
 @api_view(['get'])
@@ -91,14 +91,14 @@ def get_user(request):
     serializer_class = SmallUserSerializer
     token_key = request.headers.get('Authorization').replace('Token ', '')
     if not token_key:
-        return Response(data={'message': 'Token not provided'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error': 'Token not provided'}, status=status.HTTP_400_BAD_REQUEST)
     try:
         token = Token.objects.get(key=token_key)
         user = token.user
         serializer = serializer_class(user)
         return Response(data={'user': serializer.data}, status=status.HTTP_202_ACCEPTED)
     except Token.DoesNotExist:
-        return Response(data={'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(data={'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST'])
@@ -160,7 +160,7 @@ def password_change(request, uidb64, token):
                 auth_user = authenticate(
                     username=user.email, password=password)
                 if auth_user is None:
-                    return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Authentication failed'})
+                    return Response(status=status.HTTP_401_UNAUTHORIZED, data={'error': 'Authentication failed'})
                 token, _ = Token.objects.get_or_create(user=auth_user)
                 request.session[INTERNAL_RESET_SESSION_TOKEN] = token.key
                 return Response(status=status.HTTP_200_OK, data={'message': token.key})

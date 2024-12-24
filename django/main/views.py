@@ -44,9 +44,9 @@ def rate(request):
     user = token.user
     try:
         Rate.objects.create(user=user, film=film, rated=ratenum)
-        return Response(data={'message': 'Rated'})
+        return Response(data={'message': 'Rated'}, status=status.HTTP_201_CREATED)
     except:
         rate = Rate.objects.get(user=user, film=film)
         rate.rated = ratenum
         rate.save()
-        return Response(data={'message': 'Rate changed'})
+        return Response(data={'message': 'Rate changed'}, status=status.HTTP_200_OK)

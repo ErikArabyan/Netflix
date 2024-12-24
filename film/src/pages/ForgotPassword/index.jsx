@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { forgotPasswordAPI } from "../../features/forgotPasswordAPI/forgotPasswordAPI";
+import { setLoading } from "../../features/loading/loading";
 
 export const ForgotPassword = () => {
     const dispatch = useDispatch();
@@ -10,7 +11,16 @@ export const ForgotPassword = () => {
     const { register, reset, handleSubmit } = useForm();
 
     const save = (data) => {
-        dispatch(forgotPasswordAPI(data)).unwrap().then(navigate("/auth/email_send/"));
+        dispatch(setLoading(''));
+        dispatch(forgotPasswordAPI(data)).unwrap().then((res) => {
+            if (res?.error) {
+                dispatch(setLoading('hide'));
+                alert(res.error);
+            } else {
+                dispatch(setLoading('hide'));
+                navigate("/auth/email_send/");
+            }
+        });
         reset();
     };
 

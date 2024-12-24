@@ -13,7 +13,13 @@ export const ForgotPasswordConfirm = () => {
     const save = (data) => {
         dispatch(forgotPasswordChangeAPI({ uidb64, token, password: data.password }))
             .unwrap()
-            .then(navigate("/"));
+            .then((res) => {
+                if (res?.error) {
+                    alert(res.error);
+                } else {
+                    navigate("/")
+                }
+            });
         reset();
     };
 

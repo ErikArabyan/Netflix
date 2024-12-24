@@ -65,11 +65,19 @@ export const urlPatterns = createBrowserRouter([
         children: [
             {
                 path: "auth/register",
-                element: <Register />,
+                element: (
+                    < NoAuth >
+                        <Register />
+                    </ NoAuth>
+                ),
             },
             {
                 path: "auth/register/verification-code/",
-                element: <RegisterVerify />,
+                element: (
+                    < NoAuth >
+                        <RegisterVerify />,
+                    </ NoAuth>
+                ),
             },
             {
                 path: "auth/forgot-password",
