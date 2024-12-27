@@ -6,6 +6,7 @@ from Film import settings
 from main.models import Film
 from django.http import JsonResponse
 from .models import *
+from singletone.models import SingletoneModel
 
 @csrf_exempt
 def create_checkout_session(request, id):
@@ -50,7 +51,9 @@ def success(request):
     user = session1.metadata.user_id
     userModel = User.objects.get(email=user)
     Payment.objects.create(checkout_session_id=session, user=userModel)
-    return redirect(f'{settings.FRONT_URL}success/')
+    site_settings = SingletoneModel.load()
+    site_url = site_settings.front_URL
+    return redirect(f'{site_url}success/')
 
 def cancel(request):
-    return redirect(f'{settings.FRONT_URL}cancel/')
+    return redirect(f'{site_url}cancel/')

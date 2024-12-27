@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from authentication.tasks import *
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+from social_django.utils import psa
+from .tasks import *
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,7 +17,9 @@ from django.conf.global_settings import EMAIL_HOST_USER
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from random import randint
+from celery.result import AsyncResult
+from datetime import datetime
+
 
 
 @api_view(['post'])
@@ -42,16 +47,23 @@ def logout(request):
         return Response(status=status.HTTP_202_ACCEPTED)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
+task_id = ''
 
 @api_view(['post'])
 @permission_classes([AllowAny])
 def register(request):
     serializer_class = RegisterSerializer(data=request.data)
-    if serializer_class.is_valid(): 
+    if serializer_class.is_valid():
         email = serializer_class.validated_data['email']
-        user = serializer_class.save()
-        send_email.delay(email, user.verification_code)
-        return Response(data={'message': email}, status=status.HTTP_201_CREATED)
+        try:
+            user = serializer_class.save()
+            send_email.delay(email=email, verification_code=user.verification_code)
+            res = delete_user.apply_async(args=[user.email], eta=datetime.now() + timedelta(seconds=60))
+            global task_id
+            task_id = res.id
+            return Response(data={'message': 'Registration successful. A verification email has been sent.'}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(data={'error': f"Registration failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
         return Response(data={'error': serializer_class.errors}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -64,6 +76,8 @@ def verify_email(request):
     try:
         user = User.objects.get(email=email)
         if str(user.verification_code) == code.strip():
+            result = AsyncResult(task_id)
+            result.revoke(terminate=True)
             user.verification_code = None
             user.trycount = 0
             user.is_active = True
@@ -161,3 +175,20 @@ def password_change(request, uidb64, token):
                 return Response(status=status.HTTP_200_OK, data={'message': token.key})
 
     return Response(status=status.HTTP_404_NOT_FOUND)
+
+@csrf_exempt
+@psa('social:complete')
+def google_login(request, backend):
+
+    try:
+        data = json.loads(request.body)
+        token = data.get("token")
+
+        user = request.backend.do_auth(token)
+
+        if user:
+            return JsonResponse({"message": "User logged in successfully"})
+        else:
+            return JsonResponse({"message": "Authentication failed"}, status=400)
+    except Exception as e:
+        return JsonResponse({"message": str(e)}, status=400)
