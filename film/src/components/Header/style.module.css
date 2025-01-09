@@ -185,3 +185,15 @@
 .disable{
     scale: 0;
 }
+
+.qrlink {
+    font-size: 14px;
+}
+
+.qrimg {
+    height: 1.8rem;
+}
+
+.qrText {
+    vertical-align: 0.6rem;
+}

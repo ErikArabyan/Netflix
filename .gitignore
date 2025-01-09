@@ -1,4 +1,8 @@
-venv
-node_modules
-env
+**venv/
+**__pycache__
+**node_modules/
 .vscode
+.idea
+static
+celerybeat-schedule
+# .env

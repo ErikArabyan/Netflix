@@ -3,14 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 from .models import *
-from rest_framework.decorators import APIView, api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import APIView, api_view
 from rest_framework.authtoken.models import Token
 
 
 class HomeAPI(APIView):
-    permission_classes = [AllowAny]
-
     def get(self, request):
         films = Film.objects.all()
         genres = Genre.objects.all()
@@ -21,12 +18,10 @@ class HomeAPI(APIView):
 
 
 class FilmDetail(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request, id, film):
         serializer_class = FilmDetailSerializer
         try:
-            filmobject = Film.objects.get(name=film, id=id)
+            filmobject = Film.objects.get(id=id)
             serializer = serializer_class(filmobject)
             return Response(status=status.HTTP_200_OK, data={'film': serializer.data})
         except:
@@ -34,7 +29,6 @@ class FilmDetail(APIView):
 
 
 @api_view(['post'])
-@permission_classes([IsAuthenticated])
 def rate(request):
     film = request.data.get('film_id')
     film = Film.objects.get(id=film)

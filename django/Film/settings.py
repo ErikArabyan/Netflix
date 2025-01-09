@@ -23,12 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #third party libraries
+    # third party libraries
     'rest_framework.authtoken',
     'rest_framework',
     'corsheaders',
-    'social_django',
     'django_celery_beat',
+    'channels',
 
     # apps
     'authentication.apps.AuthenticationConfig',
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -45,7 +46,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 TEMPLATES = [
@@ -65,6 +65,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Film.wsgi.application'
+ASGI_APPLICATION = 'Film.asgi.application'
+# ASGI_APPLICATION = "Film.routing.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -111,18 +113,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "authentication.User"
 
 # CORS settings
-CORS_ORIGIN_ALLOW_ALL = True
-
-# rest framework settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
+CORS_ALLOWED_ORIGINS = [
+    # 'http://127.0.0.1:3000', 'http://localhost:3000', 'http://192.168.1.213:3000'
+    'https://127.0.0.1:3000', 'https://localhost:3000', "https://192.168.1.213:3000", 'https://accounts.google.com'
+]
 
 # Email SMTP settings
 EMAIL_HOST = 'smtp.gmail.com'
@@ -137,7 +131,7 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_51QX0yBIO5AXqdrLmXks5vubS0TKp7mQ7JqTxZdJPodYKV
 STRIPE_SECRET_KEY = getenv('STRIPE_SECRET_KEY')
 
 
-#Celery settings
+# Celery settings
 CELERY_TIMEZONE = 'Asia/Yerevan'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -156,13 +150,15 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 #     },
 # }
 
-# Social Auth settings
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
+# Google Authentication
+GOOGLE_CLIENT_ID = '97173424287-mr88917mp74110bl0so2a4un1gmorq0h.apps.googleusercontent.com'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "97173424287-mr88917mp74110bl0so2a4un1gmorq0h.apps.googleusercontent.com"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/'
+# Channels settings
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}

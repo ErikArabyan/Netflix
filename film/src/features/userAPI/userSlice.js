@@ -2,21 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { userAPI } from "./userAPI";
 
 export const initialState = {
-    user: true,
+    user: {username: ''},
 };
 
 export const userSlice = createSlice({
     name: "userSlice",
     initialState,
     reducers: {
-        userState: (state, action) => {
-            if (action.payload === 'logout') {
-                state.user = false
-            }
-            if (action.payload === 'login') {
-                state.user = true
-            }
+        userClear: (state, action) => {                
+                state.user = {}
         },
+        socialAuth: (state, action) => {
+            state.user.username = action.payload['given_name'];
+            state.user.image = action.payload['picture'];
+        }
     },
     extraReducers: (build) => {
         build
@@ -24,10 +23,11 @@ export const userSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(userAPI.rejected, (state, action) => {
-                localStorage.removeItem("token");
+                document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC'
             });
     },
 });
 
-export const { userState } = userSlice.actions;
+export const { userClear } = userSlice.actions
+export const { socialAuth } = userSlice.actions;
 export default userSlice.reducer;

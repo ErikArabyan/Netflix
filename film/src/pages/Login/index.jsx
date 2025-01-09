@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { loginAPI } from "../../features/loginAPI/loginAPI";
 import { setLoading } from "../../features/loading/loading";
 import { useState } from "react";
+import { GoogleButtonAPI } from "../../features/GoogleAPI/googleAPI";
+
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -23,12 +25,13 @@ export const Login = () => {
             .unwrap()
             .then(() => {
                 navigate("/");
-                dispatch(setLoading("hide"));
             })
             .catch(() => {
                 setcaugth("Login or password are incorrect");
+            })
+            .finally(() => {
                 dispatch(setLoading("hide"));
-            });
+            })
         reset();
     };
 
@@ -77,6 +80,8 @@ export const Login = () => {
                         <p>
                             New to Netflix? <Link to={"/auth/register/"}>Sign up now</Link>.
                         </p>
+                        <GoogleButtonAPI />
+                        <Link to={"/auth/login-by-qr/"} className={styles.qrlink}><span><img src="/qr-code.png" className={styles.qrimg} alt="" /></span> <span className={styles.qrText}>Sign in by QR</span></Link>
                     </section>
                 </form>
             </div>

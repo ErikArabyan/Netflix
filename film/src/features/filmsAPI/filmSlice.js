@@ -19,9 +19,9 @@ export const filmsAPISlice = createSlice({
 	extraReducers: build => {
 		build
 			.addCase(filmsAPI.fulfilled, (state, action) => {
-				state.noSearchFilms = action.payload.film
-				state.films = action.payload.film
-				state.genres = action.payload.genre
+				state.noSearchFilms = action.payload?.film
+				state.films = action.payload?.film
+				state.genres = action.payload?.genre
 			})
 			.addCase(filmsAPI.rejected, (state, action) => {})
 	},

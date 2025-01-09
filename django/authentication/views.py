@@ -1,13 +1,17 @@
+from singletone.models import SingletoneModel
+from .tasks import *
+from .serializers import *
+from .utils import *
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from jwt import get_unverified_header, decode, get_unverified_header
+from jwt.algorithms import RSAAlgorithm
+import requests
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from social_django.utils import psa
-from .tasks import *
-from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.mail import EmailMessage
@@ -21,10 +25,8 @@ from celery.result import AsyncResult
 from datetime import datetime
 
 
-
 @api_view(['post'])
-@permission_classes([AllowAny])
-def login(request):
+def loginview(request):
     serializer_class = LoginSerializer(data=request.data)
     if serializer_class.is_valid():
         username = serializer_class.validated_data['email']
@@ -32,7 +34,7 @@ def login(request):
         auth = authenticate(username=username, password=password)
         if auth is not None:
             token, _ = Token.objects.get_or_create(user=auth)
-            return Response(status=status.HTTP_200_OK, data={'token': token.key})
+            return Response(status=status.HTTP_200_OK, data=token.key)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED, data={'error': 'User not found'})
     else:
@@ -40,17 +42,17 @@ def login(request):
 
 
 @api_view(['get'])
-@permission_classes([IsAuthenticated])
 def logout(request):
-    if request.user:
-        request.user.auth_token.delete()
+    try:
+        token_key = request.headers.get('Authorization')
+        Token.objects.get(key=token_key).delete()
         return Response(status=status.HTTP_202_ACCEPTED)
-    return Response(status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 task_id = ''
 
 @api_view(['post'])
-@permission_classes([AllowAny])
 def register(request):
     serializer_class = RegisterSerializer(data=request.data)
     if serializer_class.is_valid():
@@ -69,7 +71,6 @@ def register(request):
 
 
 @api_view(['post'])
-@permission_classes([AllowAny])
 def verify_email(request):
     code = request.data.get('verification_code')
     email = request.data.get('email')
@@ -95,10 +96,9 @@ def verify_email(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def get_user(request):
     serializer_class = SmallUserSerializer
-    token_key = request.headers.get('Authorization').replace('Token ', '')
+    token_key = request.headers.get('Authorization')
     if not token_key:
         return Response(data={'error': 'Token not provided'}, status=status.HTTP_400_BAD_REQUEST)
     try:
@@ -108,10 +108,9 @@ def get_user(request):
         return Response(data={'user': serializer.data}, status=status.HTTP_202_ACCEPTED)
     except Token.DoesNotExist:
         return Response(data={'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
+    
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def password_reset(request):
     email = request.data.get('email')
     if not email:
@@ -123,9 +122,12 @@ def password_reset(request):
         return Response(data={'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
     uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
     token = PasswordResetTokenGenerator().make_token(user)
+    site_settings = SingletoneModel.load()
+    site_url = site_settings.front_URL
+
 
     context = {'uidb64': uidb64, 'token': token,
-               'host_name': 'http://127.0.0.1:3000'}
+               'host_name': site_url}
     html_content = render_to_string('password_reset_email.html', context)
 
     mail = EmailMessage(
@@ -140,7 +142,6 @@ def password_reset(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
 def password_change(request, uidb64, token):
     uid = urlsafe_base64_decode(uidb64).decode()
     try:
@@ -177,18 +178,28 @@ def password_change(request, uidb64, token):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 @csrf_exempt
-@psa('social:complete')
-def google_login(request, backend):
-
+def decode_and_verify_token(request):
     try:
-        data = json.loads(request.body)
-        token = data.get("token")
+        token = json.loads(request.body)['credential']
+        unverified_header = get_unverified_header(token)
+        if not token:
+            return JsonResponse({"error": "Token is required"}, status=400)
 
-        user = request.backend.do_auth(token)
-
-        if user:
-            return JsonResponse({"message": "User logged in successfully"})
-        else:
-            return JsonResponse({"message": "Authentication failed"}, status=400)
-    except Exception as e:
-        return JsonResponse({"message": str(e)}, status=400)
+        response = requests.get("https://www.googleapis.com/oauth2/v3/certs")
+        jwks = response.json()
+        kid = unverified_header.get('kid')
+        rsa_key = next((key for key in jwks['keys'] if key['kid'] == kid), None)
+        
+        decoded_token = decode(
+            token,
+            key=RSAAlgorithm.from_jwk(rsa_key),
+            algorithms=[unverified_header['alg']],
+            audience="97173424287-mr88917mp74110bl0so2a4un1gmorq0h.apps.googleusercontent.com",
+            issuer="https://accounts.google.com"
+        )
+        get_or_create_user(decoded_token)
+        return JsonResponse({"decoded_token": decoded_token}, status=200)
+    except ExpiredSignatureError:
+        return JsonResponse({"error": "Token has expired"}, status=401)
+    except InvalidTokenError:
+        return JsonResponse({"error": "Invalid token"}, status=400)

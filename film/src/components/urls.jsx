@@ -11,10 +11,13 @@ import { EmailSend } from "../pages/EmailSend";
 import { FilmDetails } from "../pages/FilmDetails";
 import { useSelector } from "react-redux";
 import { RegisterVerify } from "../pages/RegisterVerify";
-// import { userAPI } from "../features/userAPI/userAPI";
+import { LoginByQR } from "../pages/LoginByQr";
+import { QRLoading } from "../pages/QRLoading"
+import { Camera } from "./Camera";
+
 
 const NoAuth = ({ children }) => {
-    const { user } = useSelector((state) => state.userAPI.user);
+    const user = useSelector((state) => state?.userAPI);
     const navigate = useNavigate();
     if (user?.username) {
         navigate(-1);
@@ -31,11 +34,14 @@ export const urlPatterns = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
-        // loader: userAPI,
         children: [
             {
                 path: "",
                 element: <Home />,
+            },
+            {
+                path: "load/:SessionId/:email/",
+                element: <QRLoading />,
             },
             {
                 path: "auth/login",
@@ -51,6 +57,14 @@ export const urlPatterns = createBrowserRouter([
                     <Auth>
                         <FilmDetails />
                     </Auth>
+                ),
+            },
+            {
+                path: "auth/login-by-qr",
+                element: (
+                    <NoAuth>
+                        <LoginByQR />
+                    </NoAuth>
                 ),
             },
             {
@@ -105,15 +119,12 @@ export const urlPatterns = createBrowserRouter([
             },
         ],
     },
-],
     {
-        future: {
-            v7_relativeSplatPath: true,
-            v7_fetcherPersist: true,
-            v7_normalizeFormMethod: true,
-            v7_partialHydration: true,
-            v7_skipActionErrorRevalidation: true,
-            v7_startTransition: true,
-        },
+        path: "camera/",
+        element: (
+            // <Auth>
+                <Camera/>
+            // </Auth>
+        )
     }
-);
+]);

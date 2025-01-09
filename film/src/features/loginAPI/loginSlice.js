@@ -9,9 +9,8 @@ export const loginSlice = createSlice({
     extraReducers: (build) => {
         build.addCase(loginAPI.fulfilled, (state, action) => {
             const token = JSON.stringify(action.payload);
-            localStorage.setItem("token", token);
             setToken(token);
-            state.token = token;            
+            state.token = token; 
         })
     },
 });

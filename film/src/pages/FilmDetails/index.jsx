@@ -5,6 +5,7 @@ import { filmDetailsAPI } from "../../features/filmDetailsAPI/filmDetailsAPI";
 import styles from "./style.module.css";
 import { Star } from "./star";
 import { payForFilmAPI } from "../../features/payForFilmAPI/payForFilmAPI";
+import { useStringContext } from "../..";
 
 export const FilmDetails = () => {
     const params = useParams();
@@ -12,6 +13,7 @@ export const FilmDetails = () => {
     const { film } = useSelector((state) => state.filmdetailsAPISlice);
     const video = useRef(null);
     const container = useRef(null);
+    const { backend } = useStringContext()  
 
     useEffect(() => {
         if (params.id) {
@@ -34,15 +36,15 @@ export const FilmDetails = () => {
         <div className={styles.fd}>
             {film?.name && film.film?.[0] ? (
                 <div>
-                    <img className={styles.fdImg} src={`http://127.0.0.1:8000/${film.image}`} alt="Film" />
+                    <img className={styles.fdImg} src={`${backend}/${film.image}`} alt="Film" />
                     <div className={styles.fon}></div>
                     <div className={styles.videoContainer}>
                         <div className={styles.videoContainerInnder} ref={container}>
                             <video className={styles.videoFon} autoPlay muted loop ref={video}>
-                                <source src={`http://127.0.0.1:8000/${film.film?.[0]}`} type="video/mp4" />
+                                <source src={`${backend}/${film.film?.[0]}`} type="video/mp4" />
                             </video>
                             <video className={styles.video} autoPlay muted loop controls>
-                                <source src={`http://127.0.0.1:8000/${film.film?.[0]}`} type="video/mp4" />
+                                <source src={`${backend}/${film.film?.[0]}`} type="video/mp4" />
                             </video>
                         </div>
                     </div>

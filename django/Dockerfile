@@ -6,14 +6,12 @@ COPY . /app/
 RUN apt-get update && apt-get install -y curl && apt-get clean
 RUN pip install -r requirements.txt
 
-# CMD python manage.py migrate \
-    # && python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='root').exists() or User.objects.create_superuser('root', 'root@example.com', 'root')" \
-    # && python manage.py initialize_db \
-    # && python manage.py collectstatic --no-input \
-    # && gunicorn prediction.wsgi:application --bind 0.0.0.0:8000 --log-level info
 
-# CMD ["sh", "-c", "python manage.py migrate && python manage.py initialize_db && python manage.py collectstatic --no-input && gunicorn prediction.wsgi:application --bind 0.0.0.0:8000 --log-level info"]
-CMD ["sh", "-c", "python manage.py migrate && \
-python manage.py makemigrations && \
+CMD ["sh", "-c", \
+"python manage.py makemigrations && \
+python manage.py migrate && \
 python manage.py collectstatic --no-input && \
-python3 manage.py runserver 0.0.0.0:8000"]
+python manage.py loaddata data.json && \
+uvicorn Film.asgi:application --host 0.0.0.0 --port 8000 --ssl-keyfile localhost+2-key.pem --ssl-certfile localhost+2.pem \
+# uvicorn Film.asgi:application --host 127.0.0.1 --port 8000 \
+"]

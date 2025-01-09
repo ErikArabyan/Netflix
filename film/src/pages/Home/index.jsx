@@ -4,20 +4,17 @@ import { useEffect, useRef } from "react";
 import { filmsAPI } from "../../features/filmsAPI/filmsAPI";
 import { Link, NavLink } from "react-router-dom";
 import { userAPI } from "../../features/userAPI/userAPI";
+import { useStringContext } from "../..";
 
 export const Home = () => {
-    const { user } = useSelector((state) => state.userAPI.user);
+    const user = useSelector((state) => state.userAPI.user);    
+    const {backend} = useStringContext()    
     const { genres } = useSelector((state) => state.filmsAPI);
     const { films } = useSelector((state) => state.filmsAPI);
     const len = genres?.length - 1;
-    const token = localStorage.getItem("token");
     const slideRef = useRef([]);
     const dispatch = useDispatch();
     const scrollby = window.innerWidth - 40;
-
-    const search = (searchQuery) => {
-        return films.filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
 
     useEffect(() => {
         dispatch(filmsAPI())
@@ -31,10 +28,10 @@ export const Home = () => {
                     }
                 }, 20);
             });
-        if (token) {
+        if (document.cookie.includes('token=')) {
             dispatch(userAPI());
         }
-    }, [dispatch, token]);
+    }, [dispatch]);
 
     const scrollSlide = (params, index, direction) => {
         const container = slideRef.current[index];
@@ -63,7 +60,7 @@ export const Home = () => {
                 </header>
                 <p className={styles.headingText}>Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.</p>
             </div>
-            {genres.map((i, index) => {
+            {genres ? genres.map((i, index) => {
                 const filteredFilms = films.filter((j) => j.genres.includes(i));
                 if (filteredFilms.length === 0) {
                     return null;
@@ -82,12 +79,12 @@ export const Home = () => {
                                     <article key={filmindex}>
                                         {user?.username ? (
                                             <Link className={styles.filmlink} to={`film/${j.id}/${j.name.split(" ").join('_')}`}>
-                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
+                                                <img src={`${backend}${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </Link>
                                         ) : (
                                             <>
-                                                <img src={`http://127.0.0.1:8000/${j.image}`} alt={j.name} width={299} height={168} />
+                                                    <img src={`${backend}${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </>
                                         )}
@@ -111,7 +108,10 @@ export const Home = () => {
                         )}
                     </section>
                 );
-            })}
+            })
+            :
+            <></>
+            }
         </div>
     );
 };

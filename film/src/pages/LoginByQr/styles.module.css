@@ -1,0 +1,19 @@
+.qrbg {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../../public/qrbg.jpg');
+    min-height: 100vh;
+}
+
+.header{
+    color: white;
+    margin-top: 50px;
+}
+.qr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
 import styles from "./style.module.css";
 
-export const Pageload = ({isloading}) => {
+export const PageLoad = ({isloading}) => {
     return (
         <div className={[styles.pageload, isloading ? styles.hide : ''].join(' ')}>
             <div className={styles.redline1}></div>

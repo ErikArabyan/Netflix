@@ -11,7 +11,7 @@ from singletone.models import SingletoneModel
 @csrf_exempt
 def create_checkout_session(request, id):
     if request.method == 'GET':
-        domain_url = 'http://' + request.get_host()+'/'
+        domain_url = request.build_absolute_uri()
         stripe.api_key = settings.STRIPE_SECRET_KEY
         token_key = request.headers.get('Authorization').replace('Token ', '')
         token = Token.objects.get(key=token_key)
@@ -56,4 +56,6 @@ def success(request):
     return redirect(f'{site_url}success/')
 
 def cancel(request):
+    site_settings = SingletoneModel.load()
+    site_url = site_settings.front_URL
     return redirect(f'{site_url}cancel/')

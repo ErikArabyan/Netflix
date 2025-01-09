@@ -1,0 +1,104 @@
+x-environment-defaults: &environment-defaults
+  DEBUG: "True"
+  DJANGO_DATABASE_NAME: "Netflix"
+  DJANGO_DATABASE_USER: "postgres"
+  DJANGO_DATABASE_PASSWORD: "Hayk1234"
+  DJANGO_DATABASE_HOST: "postgres"
+  DJANGO_DATABASE_PORT: 5432
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+  SECRET_KEY: "django-insecure-954j6g&=p37(40r$)0pt%t2xfh7a)h^0heyj9&_gs6w6brm_hq"
+
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./film
+    ports:
+      - "3000:3000"
+    networks:
+      - netflix-network
+
+  backend:
+    build:
+      context: ./django
+    volumes:
+      - ./django:/app
+      - static_volume:/app/static
+    ports:
+      - "8000:8000"
+    networks:
+      - netflix-network
+    depends_on:
+      - postgres-db
+#      - redis
+#      - celery
+    environment:
+      <<: *environment-defaults
+    restart: on-failure:1
+    # healthcheck:
+      # test: curl -f http://localhost:8000 || exit 1
+      # interval: 10s
+      # timeout: 10s
+      # retries: 0
+      # start_period: 10s
+
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: Netflix
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Hayk1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - netflix-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - netflix-network
+
+  celery:
+    build:
+      context: ./django
+    command: celery -A Film worker --loglevel=INFO -P gevent
+    volumes:
+      - ./django:/app
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - netflix-network
+    environment:
+      <<: *environment-defaults
+
+  celery-beat:
+    build:
+      context: ./django
+    command: celery -A Film beat --loglevel=INFO
+    volumes:
+      - ./django:/app
+    depends_on:
+      - celery
+      - redis
+      - postgres-db
+    networks:
+      - netflix-network
+    environment:
+      <<: *environment-defaults
+
+
+volumes:
+  pg_data:
+  static_volume:
+
+networks:
+  netflix-network:
+    driver: bridge

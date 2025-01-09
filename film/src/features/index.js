@@ -1,14 +1,15 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:8000/",
+    baseURL: "https://192.168.1.213:8000/",
 });
 
 let interceptorId = null;
 
 export const setToken = () => {
-    const tokenString = localStorage.getItem("token");
-    const token = tokenString ? JSON.parse(tokenString).token : null;
+    const cookies = document.cookie.split('; ')
+    const tokenCookie = cookies.find(row => row.startsWith('token='))
+    const token = tokenCookie ? tokenCookie.split('=')[1] : null
 
     if (interceptorId !== null) {
         axiosInstance.interceptors.request.eject(interceptorId);
@@ -18,7 +19,7 @@ export const setToken = () => {
     if (token) {
         interceptorId = axiosInstance.interceptors.request.use(
             (config) => {
-                config.headers["Authorization"] = `Token ${token}`;
+                config.headers["Authorization"] = `${token}`;
                 return config;
             },
             (error) => {

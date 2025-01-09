@@ -44,24 +44,22 @@ export const Register = () => {
                             ))
                         }
                     <input
-                        type="first_name"
+                        type="text" name="first_name"
+                        autoComplete="given-name"
                         id="first_name"
-                        name="first_name"
-                        autoComplete="first_name"
                         className={[styles.registrationInputs, errors.first_name ? styles.errorInput : ""].join(' ')}
                         {...register("first_name", {
-                            required: "Please enter your first_name",
+                            required: "Please enter your first name",
                         })}
                     />
                     <label htmlFor="first_name">First name</label>
                     <input
-                        type="last_name"
+                        type="text" name="last_name"
+                        autoComplete="family-name"
                         id="last_name"
-                        name="last_name"
-                        autoComplete="last_name"
                         className={[styles.registrationInputs, errors.last_name ? styles.errorInput : ""].join(' ')}
                         {...register("last_name", {
-                            required: "Please enter your last_name",
+                            required: "Please enter your last name",
                         })}
                     />
                     <label htmlFor="last_name">Last name</label>

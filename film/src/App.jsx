@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Pageload } from './components/Pageload';
+import { PageLoad } from './components/PageLoad';
 
 export const App = () => {
     const isloading = useSelector(state => state.loadingReducer)    
   return (
     <div>
-      <Pageload isloading = {isloading}/>
+      <PageLoad isloading = {isloading}/>
     </div>
   )
 }
