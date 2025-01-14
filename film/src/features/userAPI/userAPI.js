@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axiosInstance from '..'
 
 export const userAPI = createAsyncThunk('get user', async () => {
+	console.log(3);
 	try {
 		const token = document.cookie
 			.split('; ')

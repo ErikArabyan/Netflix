@@ -40,7 +40,7 @@ export const urlPatterns = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "load/:SessionId/:email/",
+                path: "load/:SessionId/",
                 element: <QRLoading />,
             },
             {

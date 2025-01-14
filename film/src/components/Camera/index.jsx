@@ -5,18 +5,18 @@ export const Camera = () => {
 
     const handleCameraStart = async () => {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
             }
         } catch (error) {
-            console.error('Не удалось получить доступ к камере: ', error);
+            console.error("doesn't have access to camera", error);
         }
     };
 
     return (
         <div>
-            <button onClick={handleCameraStart}>Включить камеру</button>
+            <button onClick={handleCameraStart}>Turn on camera</button>
             <video ref={videoRef} autoPlay playsInline />
         </div>
     );

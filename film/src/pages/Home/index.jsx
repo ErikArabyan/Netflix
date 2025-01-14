@@ -7,8 +7,8 @@ import { userAPI } from "../../features/userAPI/userAPI";
 import { useStringContext } from "../..";
 
 export const Home = () => {
-    const user = useSelector((state) => state.userAPI.user);    
-    const {backend} = useStringContext()    
+    const user = useSelector((state) => state.userAPI.user);
+    const { backend } = useStringContext()
     const { genres } = useSelector((state) => state.filmsAPI);
     const { films } = useSelector((state) => state.filmsAPI);
     const len = genres?.length - 1;
@@ -67,35 +67,35 @@ export const Home = () => {
                 }
                 return (
                     <section key={index} className={styles.filmSection}>
-                        <div className={[styles.movies, +index === +len ? styles.blured : ""].join(" ")}>
+                        <div className={[styles.movies, +index === +len && !user ? styles.blured : ""].join(" ")}>
                             <header>
                                 <h2 className={styles.block}>{i}</h2>
                             </header>
-                            <div className={styles.filmgenre} ref={(el) => (slideRef.current[index] = el)}>
+                            <div className={[styles.filmgenre, +index === +len && !user ? styles.disableOverflow : ''].join(' ')} ref={(el) => (slideRef.current[index] = el)}>
                                 <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "prev")}>
                                     <img src="/back.png" className={[styles.changeslideleft, styles.hide].join(" ")} alt="" width={20} height={20} />
                                 </div>
                                 {filteredFilms.map((j, filmindex) => (
                                     <article key={filmindex}>
-                                        {user?.username ? (
+                                        {user?.user?.username ? (
                                             <Link className={styles.filmlink} to={`film/${j.id}/${j.name.split(" ").join('_')}`}>
                                                 <img src={`${backend}${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </Link>
                                         ) : (
                                             <>
-                                                    <img src={`${backend}${j.image}`} alt={j.name} width={299} height={168} />
+                                                <img src={`${backend}${j.image}`} alt={j.name} width={299} height={168} />
                                                 <p>{j.name}</p>
                                             </>
                                         )}
                                     </article>
                                 ))}
-                                <div className={styles.changeslide} onClick={(params) => scrollSlide(params, index, "next")}>
+                                <div className={[styles.changeslide, +index === +len && !user ? styles.hide : ''].join(' ')} onClick={(params) => scrollSlide(params, index, "next")}>
                                     <img src="/back.png" className={styles.changeslideright} alt="" width={20} height={20} />
                                 </div>
                             </div>
                         </div>
-                        {+index === +len && (
+                        {+index === +len && !user ? (
                             <div className={styles.goToReg}>
                                 <div className={styles.goToRegInner}>
                                     <h2>There's even more to watch.</h2>
@@ -105,12 +105,15 @@ export const Home = () => {
                                     </NavLink>
                                 </div>
                             </div>
-                        )}
+                        )
+                            :
+                            <></>
+                        }
                     </section>
                 );
             })
-            :
-            <></>
+                :
+                <></>
             }
         </div>
     );

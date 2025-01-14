@@ -66,7 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Film.wsgi.application'
 ASGI_APPLICATION = 'Film.asgi.application'
-# ASGI_APPLICATION = "Film.routing.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

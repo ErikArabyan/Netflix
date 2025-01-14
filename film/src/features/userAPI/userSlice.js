@@ -12,7 +12,7 @@ export const userSlice = createSlice({
         userClear: (state, action) => {                
                 state.user = {}
         },
-        socialAuth: (state, action) => {
+        socialAuth: (state, action) => {            
             state.user.username = action.payload['given_name'];
             state.user.image = action.payload['picture'];
         }
@@ -20,6 +20,7 @@ export const userSlice = createSlice({
     extraReducers: (build) => {
         build
             .addCase(userAPI.fulfilled, (state, action) => {
+                console.log(4);
                 state.user = action.payload;
             })
             .addCase(userAPI.rejected, (state, action) => {

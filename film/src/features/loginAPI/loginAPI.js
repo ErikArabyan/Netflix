@@ -4,6 +4,8 @@ import axiosInstance from '..';
 export const loginAPI = createAsyncThunk(
     'login',
     async (data) => {
+        console.log(1);
+        
         try {            
             const response = await axiosInstance.post('auth/login/', data);
             if (response?.data) {
@@ -11,8 +13,7 @@ export const loginAPI = createAsyncThunk(
                 return response?.data;
             }
         } catch (error) {
-            return error.response?.data
-            // return Promise.reject(error.response?.data)
+            return Promise.reject(error.response?.data)
         }
     }
 );

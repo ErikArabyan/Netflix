@@ -2,3 +2,4 @@ redis-server.exe
 celery -A Film worker --loglevel=INFO -P gevent
 celery -A Film beat --loglevel=INFO
 uvicorn Film.asgi:application --host 0.0.0.0 --port 8000 --ssl-keyfile localhost+2-key.pem --ssl-certfile localhost+2.pem
+Get-Process -Id (Get-NetTCPConnection -LocalPort 6379 | Select-Object -ExpandProperty OwningProcess) | Stop-Process -Force

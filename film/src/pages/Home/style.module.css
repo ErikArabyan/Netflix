@@ -5,6 +5,10 @@
     overflow: scroll;
 }
 
+.disableOverflow{
+    overflow: hidden;
+}
+
 .hide {
     display: none;
 }

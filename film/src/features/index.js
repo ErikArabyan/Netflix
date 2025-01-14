@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "https://192.168.1.213:8000/",
-});
+    baseURL: 'https://192.168.1.213:8000/',
+})
 
 let interceptorId = null;
 
