@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: url('../../../public/email_send.jpg');
+    background-image: url('/email_send.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

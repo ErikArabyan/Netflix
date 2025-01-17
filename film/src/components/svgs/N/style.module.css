@@ -1,0 +1,12 @@
+.logoSmall {
+  display: none;
+  width: 2.5rem;
+  object-fit: contain;
+  object-position: 0.3125rem 0.1875rem;
+}
+
+@media screen and (max-width: 25.875rem) {
+  .logoSmall {
+    display: block;
+  }
+}

@@ -1,3 +1,5 @@
+import json
+import requests
 from singletone.models import SingletoneModel
 from .tasks import *
 from .serializers import *
@@ -5,9 +7,7 @@ from .utils import *
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 from jwt import get_unverified_header, decode, get_unverified_header
 from jwt.algorithms import RSAAlgorithm
-import requests
 from django.http import JsonResponse
-import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework import status
@@ -50,7 +50,9 @@ def logout(request):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 task_id = ''
+
 
 @api_view(['post'])
 def register(request):
@@ -59,8 +61,10 @@ def register(request):
         email = serializer_class.validated_data['email']
         try:
             user = serializer_class.save()
-            send_email.delay(email=email, verification_code=user.verification_code)
-            res = delete_user.apply_async(args=[user.email], eta=datetime.now() + timedelta(seconds=60))
+            send_email.delay(
+                email=email, verification_code=user.verification_code)
+            res = delete_user.apply_async(
+                args=[user.email], eta=datetime.now() + timedelta(seconds=60))
             global task_id
             task_id = res.id
             return Response(data={'message': 'Registration successful. A verification email has been sent.'}, status=status.HTTP_201_CREATED)
@@ -72,7 +76,7 @@ def register(request):
 
 @api_view(['post'])
 def verify_email(request):
-    code = request.data.get('verification_code')
+    code = request.data.get('code')
     email = request.data.get('email')
     try:
         user = User.objects.get(email=email)
@@ -108,14 +112,13 @@ def get_user(request):
         return Response(data={'user': serializer.data}, status=status.HTTP_202_ACCEPTED)
     except Token.DoesNotExist:
         return Response(data={'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-    
+
 
 @api_view(['POST'])
 def password_reset(request):
     email = request.data.get('email')
     if not email:
         return Response(data={'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
-
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
@@ -125,9 +128,8 @@ def password_reset(request):
     site_settings = SingletoneModel.load()
     site_url = site_settings.front_URL
 
-
-    context = {'uidb64': uidb64, 'token': token,
-               'host_name': site_url}
+    context = {'uidb64': uidb64, 'token': token, 'host_name': site_url}
+    print()
     html_content = render_to_string('password_reset_email.html', context)
 
     mail = EmailMessage(
@@ -177,6 +179,7 @@ def password_change(request, uidb64, token):
 
     return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 @csrf_exempt
 def decode_and_verify_token(request):
     try:
@@ -188,8 +191,9 @@ def decode_and_verify_token(request):
         response = requests.get("https://www.googleapis.com/oauth2/v3/certs")
         jwks = response.json()
         kid = unverified_header.get('kid')
-        rsa_key = next((key for key in jwks['keys'] if key['kid'] == kid), None)
-        
+        rsa_key = next(
+            (key for key in jwks['keys'] if key['kid'] == kid), None)
+
         decoded_token = decode(
             token,
             key=RSAAlgorithm.from_jwk(rsa_key),

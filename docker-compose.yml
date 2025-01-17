@@ -21,6 +21,7 @@ services:
       - netflix-network
 
   backend:
+    container_name: backend
     build:
       context: ./django
     volumes:
@@ -31,9 +32,7 @@ services:
     networks:
       - netflix-network
     depends_on:
-      - postgres-db
-#      - redis
-#      - celery
+      - postgres
     environment:
       <<: *environment-defaults
     restart: on-failure:1
@@ -44,9 +43,9 @@ services:
       # retries: 0
       # start_period: 10s
 
-  postgres-db:
-    image: postgres:latest
+  postgres:
     container_name: postgres
+    image: postgres:latest
     environment:
       POSTGRES_DB: Netflix
       POSTGRES_USER: postgres
@@ -59,6 +58,7 @@ services:
       - netflix-network
 
   redis:
+    container_name: redis
     image: redis:latest
     ports:
       - "6379:6379"
@@ -66,14 +66,16 @@ services:
       - netflix-network
 
   celery:
+    container_name: celery
     build:
       context: ./django
     command: celery -A Film worker --loglevel=INFO -P gevent
     volumes:
       - ./django:/app
     depends_on:
+      - backend
       - redis
-      - postgres-db
+      - postgres
     networks:
       - netflix-network
     environment:
@@ -82,18 +84,20 @@ services:
   celery-beat:
     build:
       context: ./django
-    command: celery -A Film beat --loglevel=INFO
+    command: celery -A Film beat --loglevel=info
+    # command: celery -A Film beat
+    # command: celery -A Film beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./django:/app
     depends_on:
+      - backend
       - celery
       - redis
-      - postgres-db
+      - postgres
     networks:
       - netflix-network
     environment:
       <<: *environment-defaults
-
 
 volumes:
   pg_data:

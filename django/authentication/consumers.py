@@ -2,7 +2,6 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 import json
 
-
 class QrAuth(AsyncWebsocketConsumer):
     async def connect(self):
         self.sessionID = self.scope['url_route']['kwargs']['sessionID']
@@ -18,7 +17,8 @@ class QrAuth(AsyncWebsocketConsumer):
         from rest_framework.authtoken.models import Token
         try:
             token_obj = Token.objects.get(key=token_key)
-            return token_obj.user
+            user = token_obj.user
+            return user
         except Token.DoesNotExist:
             return None
 
@@ -40,6 +40,7 @@ class QrAuth(AsyncWebsocketConsumer):
                 {
                     'type': 'send_authenticated',
                     "given_name": user.username,
+                    "email": user.email,
                     "picture": user.image.url,
                     "token": token,
                 }
@@ -50,11 +51,11 @@ class QrAuth(AsyncWebsocketConsumer):
                 'message': "Invalid or expired token"
             }))
 
-
     async def send_authenticated(self, event):
         await self.send(text_data=json.dumps({
             'event': "authenticated",
             'given_name': event['given_name'],
-            'image': event['picture'],
+            'email': event['email'],
+            'picture': event['picture'],
             'token': event['token'],
         }))

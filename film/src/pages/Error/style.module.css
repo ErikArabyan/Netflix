@@ -1,6 +1,6 @@
 .error {
     position: absolute;
-    background-image: url('../../../public/error.png');
+    background-image: url('/error.png');
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;

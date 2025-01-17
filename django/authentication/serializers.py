@@ -28,6 +28,7 @@ class RegisterSerializer(ModelSerializer):
 class SmallUserSerializer(ModelSerializer):
     image = serializers.CharField()
     username = serializers.CharField()
+    email = serializers.CharField()
     class Meta:
         model = User
-        fields = ['image', 'username']
+        fields = ['image', 'username', "email"]

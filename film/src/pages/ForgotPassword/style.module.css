@@ -1,5 +1,5 @@
 .fp {
-    background-image: url('../../../public/forgot_password.jpg');
+    background-image: url('/forgot_password.jpg');
     background-repeat: no-repeat;
     background-position: top;
     background-size: cover;

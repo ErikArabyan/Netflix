@@ -5,8 +5,14 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+.hide{
+  display: none;
 }
 
 html,
@@ -216,7 +222,7 @@ img {
  */
 
 /* this is mine style */
- input:focus {
+input:focus {
   outline: 0;
   outline-color: transparent;
   outline-style: none;
@@ -257,17 +263,6 @@ button,
 select {
   /* 1 */
   text-transform: none;
-}
-
-/**
- * Correct the inability to style clickable types in iOS and Safari.
- */
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
 }
 
 /**
@@ -362,15 +357,12 @@ textarea {
 }
 
 /**
- * 1. Correct the odd appearance in Chrome and Safari.
- * 2. Correct the outline style in Safari.
+ * 1. Correct the outline style in Safari.
  */
 
 [type="search"] {
-  -webkit-appearance: textfield;
   /* 1 */
   outline-offset: -2px;
-  /* 2 */
 }
 
 /**

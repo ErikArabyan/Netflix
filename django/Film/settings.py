@@ -113,7 +113,7 @@ AUTH_USER_MODEL = "authentication.User"
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    # 'http://127.0.0.1:3000', 'http://localhost:3000', 'http://192.168.1.213:3000'
+    'http://127.0.0.1:3000', 'http://localhost:3000', 'http://192.168.1.213:3000',
     'https://127.0.0.1:3000', 'https://localhost:3000', "https://192.168.1.213:3000", 'https://accounts.google.com'
 ]
 
