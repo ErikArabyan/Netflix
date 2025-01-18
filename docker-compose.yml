@@ -40,7 +40,7 @@ services:
       # test: curl -f http://localhost:8000 || exit 1
       # interval: 10s
       # timeout: 10s
-      # retries: 0
+      # retries: 3
       # start_period: 10s
 
   postgres:
@@ -69,11 +69,10 @@ services:
     container_name: celery
     build:
       context: ./django
-    command: celery -A Film worker --loglevel=INFO -P gevent
+    command: celery -A Film worker --loglevel=INFO
     volumes:
       - ./django:/app
     depends_on:
-      - backend
       - redis
       - postgres
     networks:
@@ -82,18 +81,16 @@ services:
       <<: *environment-defaults
 
   celery-beat:
+    container_name: celery_beat
     build:
       context: ./django
-    command: celery -A Film beat --loglevel=info
-    # command: celery -A Film beat
-    # command: celery -A Film beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    volumes:
-      - ./django:/app
+    command: celery -A Film beat --loglevel=INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - backend
-      - celery
       - redis
       - postgres
+    volumes:
+      - ./django:/app
     networks:
       - netflix-network
     environment:

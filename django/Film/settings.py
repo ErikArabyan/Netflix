@@ -1,6 +1,8 @@
 from pathlib import Path
 from os import getenv
 from dotenv import load_dotenv
+from celery.schedules import crontab
+
 
 load_dotenv()
 
@@ -10,7 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 ROOT_URLCONF = 'Film.urls'
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Yerevan'
 USE_I18N = True
 USE_TZ = True
 
@@ -131,33 +133,15 @@ STRIPE_SECRET_KEY = getenv('STRIPE_SECRET_KEY')
 
 
 # Celery settings
-CELERY_TIMEZONE = 'Asia/Yerevan'
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = 'redis://localhost:6379'  # URL брокера
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_RESULT_EXTENDED = True
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+CELERY_RESULT_EXTENDED = True
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
-# CELERY_BEAT_SCHEDULE = {
-#     "sample_task": {
-#         "task": "core.tasks.sample_task",
-#         "schedule": crontab(minute="*/1"),
-#     },
-# }
 
 # Google Authentication
 GOOGLE_CLIENT_ID = '97173424287-mr88917mp74110bl0so2a4un1gmorq0h.apps.googleusercontent.com'
-
-# Channels settings
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
-        },
-    },
-}

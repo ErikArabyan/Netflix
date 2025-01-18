@@ -1,5 +1,5 @@
 import styles from './style.module.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { forgotPasswordAPI } from '../../features/forgotPasswordAPI/forgotPasswordAPI'
 import { setLoading } from '../../features/loading/loading'

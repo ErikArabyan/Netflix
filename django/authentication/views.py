@@ -63,8 +63,7 @@ def register(request):
             user = serializer_class.save()
             send_email.delay(
                 email=email, verification_code=user.verification_code)
-            res = delete_user.apply_async(
-                args=[user.email], eta=datetime.now() + timedelta(seconds=60))
+            res = delete_user.apply_async((user.email,), countdown=60)
             global task_id
             task_id = res.id
             return Response(data={'message': 'Registration successful. A verification email has been sent.'}, status=status.HTTP_201_CREATED)

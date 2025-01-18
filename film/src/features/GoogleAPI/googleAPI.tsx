@@ -3,7 +3,7 @@ import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import { setToken } from '../index'
 import { socialAuth } from '../userAPI/userSlice'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStringContext } from '../../main'
 import { AppDispatch } from '../../application/store'
@@ -43,8 +43,8 @@ export const GoogleButtonAPI = () => {
 	}, [savedata, dispatch, navigate])
 
 	return (
-		<div style={{ display: 'flex', justifyContent: 'center' }}>
-			<GoogleLogin width={220} onSuccess={onSuccess} />
+		<div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+			<GoogleLogin onSuccess={onSuccess} width={213} />
 		</div>
 	)
 }

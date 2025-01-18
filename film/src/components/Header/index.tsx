@@ -11,6 +11,7 @@ import { Netflix } from '../svgs/Netflix'
 import { N } from '../svgs/N'
 import { Search } from '../svgs/search'
 import { QR } from '../svgs/QR'
+import { DropDownArrow } from '../svgs/dropDownArrow'
 
 
 export const Header = () => {
@@ -61,7 +62,7 @@ export const Header = () => {
 						</button>
 						<div className={styles.profile} onClick={() => setShow(show ? false : true)}>
 							<img src={user.image.includes('https') ? `${user.image}` : `${backend}/media/${user.image}`} className={styles.profileImage} alt='' />
-							<img src='/down-arrow.png' className={styles.drowdownArrow} alt='' />
+							<DropDownArrow/>
 						</div>
 						<div onClick={() => setShow(show ? true : true)} className={[styles.dropdown, show ? [styles.show, styles.disable].join(' ') : ''].join(' ')}>
 							<div className={[styles.innertext, styles.cursor].join(' ')}>

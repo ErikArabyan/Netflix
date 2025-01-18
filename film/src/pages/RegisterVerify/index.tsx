@@ -10,7 +10,7 @@ export const RegisterVerify = () => {
 	const location = useLocation()
 	const data = location.state
 	const dispatch = AppDispatch()
-	const [codeError, setCodeError] = useState<string | string[]>([])
+	const [codeError, setCodeError] = useState<string | string[]>('')
 	const navigate = useNavigate()
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, index: number) => {

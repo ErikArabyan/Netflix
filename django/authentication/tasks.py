@@ -7,7 +7,7 @@ from django.conf.global_settings import EMAIL_HOST_USER
 from Film.celery import app
 
 
-@app.task(queue='email_queue', max_retries=3, rate_limit='10/s')
+@shared_task
 def send_email(email, verification_code):
         mail = EmailMessage(
             subject='Password Reset on Netflix',
@@ -19,8 +19,8 @@ def send_email(email, verification_code):
         return 'mail send successfully'
 
 
-@app.task(queue='email_queue', max_retries=3, rate_limit='10/s')
-def delete_user(email):
+@shared_task
+def delete_user(email=''):
     try:
         user = User.objects.get(email=email)
         user.delete()

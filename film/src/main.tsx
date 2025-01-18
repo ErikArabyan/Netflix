@@ -21,7 +21,7 @@ export const useStringContext = (): StringContextType => {
 	}
 	return context
 }
-const protocol = "https://"
+const protocol = "http://"
 const ip = "192.168.1.213:8000"
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 

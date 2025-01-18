@@ -6,6 +6,7 @@ import { setLoading } from '../../features/loading/loading'
 import { useState } from 'react'
 import { GoogleButtonAPI } from '../../features/GoogleAPI/googleAPI'
 import { AppDispatch } from '../../application/store'
+import { QR } from '../../components/svgs/QR'
 
 interface data {
 	email: string
@@ -16,6 +17,7 @@ export const Login = () => {
 	const navigate = useNavigate()
 	const dispatch = AppDispatch()
 	const [caught, setCaught] = useState<string>('')
+
 	const {
 		handleSubmit,
 		register,
@@ -76,16 +78,16 @@ export const Login = () => {
 						<label className={styles.loginLabel} htmlFor='email'>
 							Password
 						</label>
-						<button className='nbutton'>Login</button>
+						<button className='nbutton'>
+							Login
+						</button>
 						<Link to={'/auth/forgot-password/'}>Forgot password?</Link>
 						<p>
 							New to Netflix? <Link to={'/auth/register/'}>Sign up now</Link>.
 						</p>
 						<GoogleButtonAPI />
 						<Link to={'/auth/login-by-qr/'} className={styles.qrlink}>
-							<span>
-								<img src='/qr-code.png' className={styles.qrimg} alt='' />
-							</span>{' '}
+							<QR />
 							<span className={styles.qrText}>Sign in by QR</span>
 						</Link>
 					</section>
