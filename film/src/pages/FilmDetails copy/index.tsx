@@ -24,7 +24,7 @@ interface FilmDetailsRequest {
 	filmname: string
 }
 
-export const FilmDetails = () => {
+export const FilmDetailscopy = () => {
 	const params = useParams<{ id: string }>()
 	const dispatch = AppDispatch()
 	const { film } = AppSelector((state: FilmDetailsState) => state.filmdetailsAPI)

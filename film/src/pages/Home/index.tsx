@@ -111,7 +111,7 @@ export const Home = () => {
 								<div className={styles.goToReg}>
 									<div className={styles.goToRegInner}>
 										<h2>There's even more to watch.</h2>
-										<p>Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.</p>
+										<p className={styles.goToRegText}>Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.</p>
 										<NavLink to={'auth/register'}>
 											<button className='nbutton'>Join Now</button>
 										</NavLink>
