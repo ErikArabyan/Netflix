@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 
 const axiosInstance: AxiosInstance = axios.create({
-	baseURL: 'http://192.168.1.213:8000/',
+	baseURL: (import.meta as any).env.VITE_URL,
 })
 
 let interceptorId: number | null = null

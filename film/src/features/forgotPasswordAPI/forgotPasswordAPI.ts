@@ -25,7 +25,6 @@ export const forgotPasswordAPI = createAsyncThunk<
 		const response = await axiosInstance.post('auth/password_change/', email)
 		return response.data
 	} catch (error: any) {
-	
 		return rejectWithValue(error.response?.data || { message: 'Unknown error', status: 'error' })
 	}
 })

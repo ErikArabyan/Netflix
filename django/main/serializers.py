@@ -18,7 +18,6 @@ class NominationsSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class GenreSerializer(serializers.ModelSerializer):
-    
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation = instance.name

@@ -6,7 +6,7 @@ export const filmsAPI = createAsyncThunk('getFilms', async () => {
                 const response = await axiosInstance.get('');
                 return response.data;
         }
-        catch (error) {
+        catch (error: any) {
                 return error?.response?.data
         }
 });

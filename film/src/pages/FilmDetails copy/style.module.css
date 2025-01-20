@@ -1,0 +1,72 @@
+.fd {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.fdImg {
+  position: fixed;
+  z-index: -100;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  filter: blur(3.125rem) brightness(40%);
+}
+
+.videoContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.videoContainerInnder {
+  position: relative;
+  width: 100%;
+}
+
+.fon {
+  position: absolute;
+}
+
+.videoFon {
+  width: 100%;
+  height: 100%;
+  filter: blur(1.125rem) brightness(40%);
+}
+
+.video {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 100%;
+}
+
+.star {
+  display: flex;
+  gap: 0;
+  height: 3.125rem;
+  width: 3.125rem;
+}
+
+.one {
+  position: relative;
+  background-color: red;
+  clip-path: polygon(100% 0, 100% 77%, 40% 100%, 62% 62%, 0 39%, 78% 39%);
+  width: 50%;
+  height: 100%;
+}
+
+.two {
+  position: relative;
+  background-color: red;
+  clip-path: polygon(0% 0, 0% 77%, 60% 100%, 38% 63%, 100% 39%, 22% 39%);
+  width: 50%;
+  height: 100%;
+}
+
+.rating {
+  position: absolute;
+  display: flex;
+  right: 0.625rem;
+}
