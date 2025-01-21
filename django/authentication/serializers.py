@@ -6,13 +6,14 @@ from authentication.models import User
 from django.contrib.auth.hashers import make_password
 
 class LoginSerializer(ModelSerializer):
-    email = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(required=True)
     class Meta:
         model = User
         fields = ['email', 'password']
 
 class RegisterSerializer(ModelSerializer):
+    email = serializers.EmailField(required=True)
     def validate(self, data):
         data['verification_code'] = randint(1000, 9999)
         data['is_active'] = False
@@ -23,7 +24,7 @@ class RegisterSerializer(ModelSerializer):
         return data
     class Meta:
         model = User
-        fields = ['email', 'password', 'is_director', 'is_distributor', 'is_art_director', 'is_editor', "first_name", "last_name"]
+        fields = ['email', 'password', "first_name", "last_name"]
         
 class SmallUserSerializer(ModelSerializer):
     image = serializers.CharField()

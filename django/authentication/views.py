@@ -22,7 +22,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from celery.result import AsyncResult
-from datetime import datetime
 
 
 @api_view(['post'])
@@ -68,7 +67,7 @@ def register(request):
             task_id = res.id
             return Response(data={'message': 'Registration successful. A verification email has been sent.'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response(data={'error': f"Registration failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data={'error': f"Registration failed: {str(e)}"}, status=status.HTTP_403_FORBIDDEN)
     else:
         return Response(data={'error': serializer_class.errors}, status=status.HTTP_400_BAD_REQUEST)
 

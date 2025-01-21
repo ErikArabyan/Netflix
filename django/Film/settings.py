@@ -95,6 +95,8 @@ DATABASES = {
         'PORT': getenv('DJANGO_DATABASE_PORT'),
     }
 }
+
+# sqlite database settings
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -133,7 +135,7 @@ STRIPE_SECRET_KEY = getenv('STRIPE_SECRET_KEY')
 
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379'  # URL брокера
+CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
@@ -145,3 +147,10 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Google Authentication
 GOOGLE_CLIENT_ID = '97173424287-mr88917mp74110bl0so2a4un1gmorq0h.apps.googleusercontent.com'
+
+# Channel (QR authentication settings)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
