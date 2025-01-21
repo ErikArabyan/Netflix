@@ -53,7 +53,7 @@ class TestRegisterView(TestCase):
         url = reverse('register')
         response = self.client.post(url, data={
                                     'email': self.real_email, 'password': self.password, 'first_name': self.first_name, 'last_name': self.last_name})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 202)
 
     def test_invalid_register(self):
         test_data = {'email': self.incorrect_email, 'password': self.password}
