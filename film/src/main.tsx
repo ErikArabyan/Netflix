@@ -24,7 +24,6 @@ export const useStringContext = (): StringContextType => {
 }
 
 const protocol = (import.meta as any).env.VITE_PROTOCOL
-console.log(protocol) // undefined
 const ip = (import.meta as any).env.VITE_IP
 const clientID = (import.meta as any).env.VITE_GOOGLE_CLIENT_ID
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
