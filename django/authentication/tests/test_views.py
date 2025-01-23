@@ -60,7 +60,7 @@ class TestRegister(MyTestClass):
 
     def test_not_allowed_method(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 405)
 
     def test_valid(self):
         response = self.client.post(self.url, data={
