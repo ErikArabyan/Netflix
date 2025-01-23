@@ -207,7 +207,7 @@ class TestPasswordResetConfirm(MyTestClass):
     def test_invalid_uid(self):
         response = self.client.post(self.invalid_uid_url, data={
                                     'password': self.password})
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 400)
 
     def test_invalid_token(self):
         response = self.client.post(self.invalid_token_url, data={
