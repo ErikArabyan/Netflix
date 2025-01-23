@@ -186,3 +186,6 @@ def decode_and_verify_token(request):
         return JsonResponse({"error": "Token has expired"}, status=401)
     except InvalidTokenError:
         return JsonResponse({"error": "Invalid token"}, status=400)
+
+
+
