@@ -126,9 +126,7 @@ def password_reset(request):
     site_settings = SingletoneModel.load()
     site_url = site_settings.front_URL
     context = {'uidb64': uidb64, 'token': token, 'host_name': site_url}
-    print(context)
     html_content = render_to_string('password_reset_email.html', context)
-    print(html_content)
     send_password_reset_email.delay(email, html_content)
     return Response(data={'message': 'Password reset email sent'}, status=status.HTTP_200_OK)
 
@@ -186,6 +184,3 @@ def decode_and_verify_token(request):
         return JsonResponse({"error": "Token has expired"}, status=401)
     except InvalidTokenError:
         return JsonResponse({"error": "Invalid token"}, status=400)
-
-
-
