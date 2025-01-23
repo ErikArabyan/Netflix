@@ -16,3 +16,6 @@ def get_or_create_user(payload):
     serializer = SmallUserSerializer(user)
     Token.objects.update_or_create(user=user, defaults={'key': payload.get('sub')})
     return Response(data={'user': serializer.data}, status=status.HTTP_202_ACCEPTED)
+
+
+
