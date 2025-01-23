@@ -8,15 +8,28 @@ from Film.celery import app
 
 
 @shared_task
-def send_email(email, verification_code):
-        mail = EmailMessage(
-            subject='Password Reset on Netflix',
-            body=f"This is your verification code: {verification_code}",
-            from_email=EMAIL_HOST_USER,
-            to=[email],
-        )
-        mail.send()
-        return 'mail send successfully'
+def send_registration_email(email, verification_code):
+    mail = EmailMessage(
+        subject='Password Reset on Netflix',
+        body=f"This is your verification code: {verification_code}",
+        from_email=EMAIL_HOST_USER,
+        to=[email],
+    )
+    mail.send()
+    return 'mail send successfully'
+
+
+@shared_task
+def send_password_reset_email(email, html_content):
+    mail = EmailMessage(
+        subject='Password Reset on Netflix',
+        body=html_content,
+        from_email=EMAIL_HOST_USER,
+        to=[email],
+    )
+    mail.content_subtype = "html"
+    mail.send()
+    return 'mail send successfully'
 
 
 @shared_task

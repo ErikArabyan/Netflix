@@ -31,8 +31,8 @@ export const Register = () => {
 			.then(res => {
 				if (res.error) {
 					setCodeError(res.error)
-				} else {
-					navigate('/auth/register/verification-code/', { state: data.email })
+				} else {					
+					navigate('/auth/register/verification-code/', { state: [data.email, res.task] })
 				}
 			})
 			.finally(() => {

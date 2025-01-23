@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { createBrowserRouter, useNavigate } from 'react-router-dom'
 import { Layout } from './pages/Layout'
 import { Home } from './pages/Home'
@@ -23,10 +23,11 @@ interface NoAuthProps {
 const NoAuth = ({ children }: NoAuthProps) => {
 	const user = AppSelector(state => state?.userAPI)
 	const navigate = useNavigate()
-
-	if (user?.username) {
-		navigate(-1)
-	}
+	useEffect(() => {
+		if (user?.username) {
+			navigate(-1)
+		}
+	}, [])
 
 	return user?.username ? <Home /> : <>{children}</>
 }

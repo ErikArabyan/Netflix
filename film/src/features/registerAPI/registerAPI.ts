@@ -11,6 +11,7 @@ interface RegisterData {
 interface RegisterResponse {
 	success: boolean
 	message?: string
+	task?: string
 	error: string
 }
 
@@ -21,6 +22,8 @@ interface RegisterError {
 export const registerAPI = createAsyncThunk<RegisterResponse, RegisterData, { rejectValue: RegisterError }>('register', async (data, { rejectWithValue }) => {
 	try {
 		const response = await axiosInstance.post<RegisterResponse>('auth/register/', data)
+		console.log(response.data);
+		
 		return response.data
 	} catch (error: any) {
 		return rejectWithValue(error.response?.data || { message: 'Unknown error' })

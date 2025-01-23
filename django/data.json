@@ -2521,5 +2521,12 @@
     "checkout_session_id": "cs_test_a1vLOfa3DqIExo4SLdhxGTedpkl37iQEPHM6zDzpYvbM2wZkJuhQafuEQU",
     "user": 2
   }
+},
+{
+  "model": "singletone.singletonemodel",
+  "pk": 1,
+  "fields": {
+    "front_URL": "https://192.168.1.213:3000"
+  }
 }
 ]

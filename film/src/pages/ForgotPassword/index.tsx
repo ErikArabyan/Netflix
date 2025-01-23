@@ -6,7 +6,7 @@ import { setLoading } from '../../features/loading/loading'
 import { AppDispatch } from '../../application/store'
 
 interface ForgotPassword {
-    email: string;
+	email: string
 }
 
 export const ForgotPassword = () => {
@@ -14,20 +14,13 @@ export const ForgotPassword = () => {
 	const navigate = useNavigate()
 	const { register, reset, handleSubmit } = useForm<ForgotPassword>()
 
-
 	const save = (data: ForgotPassword) => {
 		dispatch(setLoading(''))
 		dispatch(forgotPasswordAPI(data))
 			.unwrap()
-			.then(res => {
-				if (res?.error) {
-					dispatch(setLoading('hide'))
-					alert(res.error)
-				} else {
-					dispatch(setLoading('hide'))
-					navigate('/auth/email_send/')
-				}
-			})
+			.then(() => {navigate('/auth/email_send/')})
+			.catch(res => alert(res.error))
+			.finally(() => dispatch(setLoading('hide')))
 		reset()
 	}
 

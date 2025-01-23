@@ -3,11 +3,13 @@ import styles from './style.module.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { registerCodeVerifyAPI } from '../../features/registerCodeVerification/registerCodeVerificationAPI'
 import { AppDispatch } from '../../application/store'
+import { setLoading } from '../../features/loading/loading'
 
 export const RegisterVerify = () => {
 	const inputsRef = useRef<(HTMLInputElement | null)[]>([])
 	const location = useLocation()
-	const data = location.state
+	const data = location.state[0]
+	const task = location.state[1]
 	const dispatch = AppDispatch()
 	const [codeError, setCodeError] = useState('')
 	const navigate = useNavigate()
@@ -30,13 +32,21 @@ export const RegisterVerify = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
 		const code = inputsRef.current.map(input => input?.value).join('')
-		const send = { code: code, email: data }
+		const send = { code: code, email: data, task: task }
 		if (data) {
+			dispatch(setLoading(''))
 			dispatch(registerCodeVerifyAPI(send))
 				.unwrap()
 				.then(res => {
 					res.error ? setCodeError(res.error) : navigate('/auth/login')
 				})
+				.catch(res => {
+					if (res.error === 'You have reached the attempt limit' || res.error === 'User Not Found') {
+						window.alert('You have reached the attempt limit')
+						navigate('/auth/register')
+					}
+				})
+				.finally(() => dispatch(setLoading('hide')))
 		}
 	}
 	return (

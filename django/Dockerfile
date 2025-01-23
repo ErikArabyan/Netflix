@@ -6,7 +6,6 @@ COPY . /app/
 COPY requirements.txt .
 
 RUN apt-get update && apt-get install -y curl && apt-get clean
-RUN pip uninstall -y jwt
 RUN pip install -r requirements.txt
 
 CMD ["sh", "-c", \

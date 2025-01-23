@@ -14,14 +14,15 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from django.core.mail import EmailMessage
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.template.loader import render_to_string
-from django.conf.global_settings import EMAIL_HOST_USER
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from celery.result import AsyncResult
+from re import match
+from django.contrib.auth.password_validation import validate_password
+
 
 
 @api_view(['post'])
@@ -50,9 +51,6 @@ def logout(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-task_id = ''
-
-
 @api_view(['post'])
 def register(request):
     serializer_class = RegisterSerializer(data=request.data)
@@ -60,12 +58,10 @@ def register(request):
         email = serializer_class.validated_data['email']
         try:
             user = serializer_class.save()
-            send_email.delay(
+            send_registration_email.delay(
                 email=email, verification_code=user.verification_code)
             res = delete_user.apply_async((user.email,), countdown=60)
-            global task_id
-            task_id = res.id
-            return Response(data={'message': 'Registration successful. A verification email has been sent.'}, status=status.HTTP_201_CREATED)
+            return Response(data={'message': 'Registration successful. A verification email has been sent.', 'task': res.id}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response(data={'error': f"Registration failed: {str(e)}"}, status=status.HTTP_403_FORBIDDEN)
     else:
@@ -76,8 +72,12 @@ def register(request):
 def verify_email(request):
     code = request.data.get('code')
     email = request.data.get('email')
+    task_id = request.data.get('task')
     try:
-        user = User.objects.get(email=email)
+        if match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email) is not None:
+            user = User.objects.get(email=email)
+        else:
+            return Response(data={'error': 'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
         if str(user.verification_code) == code.strip():
             result = AsyncResult(task_id)
             result.revoke(terminate=True)
@@ -115,67 +115,48 @@ def get_user(request):
 @api_view(['POST'])
 def password_reset(request):
     email = request.data.get('email')
-    if not email:
-        return Response(data={'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+    if not email or not (match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email) is not None):
+        return Response(data={'error': 'Email is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
-        return Response(data={'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
     uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
     token = PasswordResetTokenGenerator().make_token(user)
     site_settings = SingletoneModel.load()
     site_url = site_settings.front_URL
-
     context = {'uidb64': uidb64, 'token': token, 'host_name': site_url}
-    print()
+    print(context)
     html_content = render_to_string('password_reset_email.html', context)
-
-    mail = EmailMessage(
-        subject='Password Reset on Netflix',
-        body=html_content,
-        from_email=EMAIL_HOST_USER,
-        to=[email],
-    )
-    mail.content_subtype = "html"
-    mail.send()
+    print(html_content)
+    send_password_reset_email.delay(email, html_content)
     return Response(data={'message': 'Password reset email sent'}, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
-def password_change(request, uidb64, token):
+def password_reset_confirm(request, uidb64, token):
     uid = urlsafe_base64_decode(uidb64).decode()
+    INTERNAL_RESET_SESSION_TOKEN = "_password_reset_token"
     try:
         user = User.objects.get(pk=uid)
-    except User.DoesNotExist:
+    except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    reset_url_token = "set-password"
-    INTERNAL_RESET_SESSION_TOKEN = "_password_reset_token"
-
-    if user is not None:
-        if token == reset_url_token:
-            session_token = request.session.get(INTERNAL_RESET_SESSION_TOKEN)
-            if token_generator.check_token(user, session_token):
-                # If the token is valid, display the password reset form.
-                return Response(status=status.HTTP_200_OK)
-        else:
-            if token_generator.check_token(user, token):
-                # Store the token in the session and redirect to the
-                # password reset form at a URL without the token. That
-                # avoids the possibility of leaking the token in the
-                # HTTP Referer header.
-                password = request.data.get('password')
-                user.set_password(password)
-                user.save()
-                auth_user = authenticate(
-                    username=user.email, password=password)
-                if auth_user is None:
-                    return Response(status=status.HTTP_401_UNAUTHORIZED, data={'error': 'Authentication failed'})
-                token, _ = Token.objects.get_or_create(user=auth_user)
-                request.session[INTERNAL_RESET_SESSION_TOKEN] = token.key
-                return Response(status=status.HTTP_200_OK, data={'message': token.key})
-
-    return Response(status=status.HTTP_404_NOT_FOUND)
+    if token_generator.check_token(user, token):
+        password = request.data.get('password')
+        try:
+            validate_password(password)
+            user.set_password(password)
+            user.save()
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        auth_user = authenticate(
+            username=user.email, password=password)
+        token, _ = Token.objects.get_or_create(user=auth_user)
+        request.session[INTERNAL_RESET_SESSION_TOKEN] = token.key
+        return Response(status=status.HTTP_200_OK, data={'message': token.key})
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 @csrf_exempt
