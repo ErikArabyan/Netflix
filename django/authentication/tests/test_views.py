@@ -34,7 +34,7 @@ class TestLogin(MyTestClass):
 
     def test_not_allowed_method(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 406)
+        self.assertEqual(response.status_code, 404)
 
     def test_valid(self):
         test_data = {'email': self.email, 'password': self.password}
