@@ -157,7 +157,7 @@ def password_reset_confirm(request, uidb64, token):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
-@csrf_exempt
+@api_view(['POST'])
 def decode_and_verify_token(request):
     try:
         token = json.loads(request.body)['credential']

@@ -36,7 +36,7 @@ export const ForgotPasswordConfirm = () => {
 					if (res?.error) alert(res.error)
 					else navigate('/auth/login/')
 				})
-				.finally(() => dispatch(setLoading('')))
+				.finally(() => dispatch(setLoading('hide')))
 		} else {
 			alert('Invalid or missing parameters')
 		}

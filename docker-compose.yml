@@ -20,7 +20,7 @@ services:
     build:
       context: ./film
     ports:
-      - "3000:3000"
+      - "3000:3001"
     networks:
       - netflix-network
     environment:

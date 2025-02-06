@@ -14,4 +14,4 @@ python manage.py migrate && \
 python manage.py migrate django_celery_beat && \
 python manage.py collectstatic --no-input && \
 python manage.py loaddata data.json && \
-uvicorn Film.asgi:application --host 0.0.0.0 --port 8000 --ssl-keyfile localhost+2-key.pem --ssl-certfile localhost+2.pem"]
+uvicorn Film.asgi:application --host 0.0.0.0 --port 8000 --reload --ssl-keyfile localhost+2-key.pem --ssl-certfile localhost+2.pem"]
